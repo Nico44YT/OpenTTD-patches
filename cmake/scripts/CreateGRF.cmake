@@ -45,13 +45,20 @@ foreach(NFO_LINE IN LISTS NFO_LINES)
     endif()
 endforeach()
 
-execute_process(COMMAND ${NFORENUM_EXECUTABLE} -s sprites/${GRF_SOURCE_FOLDER_NAME}.nfo RESULT_VARIABLE RESULT)
-if(RESULT)
-    if(NOT RESULT MATCHES "^[0-9]*$")
-        message(FATAL_ERROR "Failed to run NFORenum (${RESULT}), please check NFORENUM_EXECUTABLE variable")
-    endif()
-    message(FATAL_ERROR "NFORenum failed")
-endif()
+#execute_process(
+#        COMMAND "${NFORENUM_EXECUTABLE}" "sprites/${GRF_SOURCE_FOLDER_NAME}.nfo"
+#        RESULT_VARIABLE RESULT
+#        OUTPUT_VARIABLE OUTPUT
+#        ERROR_VARIABLE ERROR
+#)
+#
+#message(STATUS "NFORenum exit status: ${RESULT}")
+#message(STATUS "NFORenum stdout: ${OUTPUT}")
+#message(STATUS "NFORenum stderr: ${ERROR}")
+#
+#if(NOT "${RESULT}" STREQUAL "0")
+#    message(FATAL_ERROR "NFORenum failed: ${RESULT} >> \"${NFORENUM_EXECUTABLE} sprites/${GRF_SOURCE_FOLDER_NAME}.nfo\"")
+#endif()
 
 execute_process(COMMAND ${GRFCODEC_EXECUTABLE} -n -s -e -g2 -p1 ${GRF_SOURCE_FOLDER_NAME}.grf RESULT_VARIABLE RESULT)
 if(RESULT)

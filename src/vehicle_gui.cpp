@@ -2354,6 +2354,7 @@ void BaseVehicleListWindow::UpdateSortingFromGrouping()
 		case VehicleType::Road:     this->sorting = &_sorting[this->grouping].roadveh; break;
 		case VehicleType::Ship:     this->sorting = &_sorting[this->grouping].ship; break;
 		case VehicleType::Aircraft: this->sorting = &_sorting[this->grouping].aircraft; break;
+		case VehicleType::Utility:  this->sorting = &_sorting[this->grouping].utility; break;
 		default: NOT_REACHED();
 	}
 	this->vehgroups.SetSortFuncs(this->GetVehicleSorterFuncs());

@@ -204,6 +204,7 @@ struct Sorting {
 	Listing roadveh;
 	Listing ship;
 	Listing train;
+	Listing utility;
 };
 
 #endif /* VEHICLE_GUI_BASE_H */

@@ -327,6 +327,7 @@ void SubtractMoneyFromCompany(Company *c, const CommandCost &cost)
 		ExpensesType::RoadVehRevenue,
 		ExpensesType::AircraftRevenue,
 		ExpensesType::ShipRevenue,
+		ExpensesType::UtilityRevenue,
 		ExpensesType::SharingRevenue,
 	};
 	static constexpr ExpensesTypes EXPENSESTYPES_EXPENSES{
@@ -334,6 +335,7 @@ void SubtractMoneyFromCompany(Company *c, const CommandCost &cost)
 		ExpensesType::RoadVehRun,
 		ExpensesType::AircraftRun,
 		ExpensesType::ShipRun,
+		ExpensesType::UtilityRun,
 		ExpensesType::Property,
 		ExpensesType::LoanInterest,
 		ExpensesType::SharingCost,

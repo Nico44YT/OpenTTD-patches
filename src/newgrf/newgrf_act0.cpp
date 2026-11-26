@@ -257,11 +257,12 @@ struct InvokeGrfChangeInfoHandler {
 	using Invoker = ChangeInfoResult(*)(uint first, uint last, int prop, const GRFFilePropertyRemapEntry *mapping_entry, ByteReader &buf, GrfLoadingStage stage);
 	static constexpr EnumIndexArray<Invoker, GrfSpecFeature, GrfSpecFeature::End> funcs{ // Must be listed in feature order.
 		Invoke<GrfSpecFeature::Trains>,       Invoke<GrfSpecFeature::RoadVehicles>,  Invoke<GrfSpecFeature::Ships>,         Invoke<GrfSpecFeature::Aircraft>,
+		Invoke<GrfSpecFeature::Utilities>,
 		Invoke<GrfSpecFeature::Stations>,     Invoke<GrfSpecFeature::Canals>,        Invoke<GrfSpecFeature::Bridges>,       Invoke<GrfSpecFeature::Houses>,
 		Invoke<GrfSpecFeature::GlobalVar>,    Invoke<GrfSpecFeature::IndustryTiles>, Invoke<GrfSpecFeature::Industries>,    Invoke<GrfSpecFeature::Cargoes>,
 		Invoke<GrfSpecFeature::SoundEffects>, Invoke<GrfSpecFeature::Airports>,      Invoke<GrfSpecFeature::Signals>,       Invoke<GrfSpecFeature::Objects>,
 		Invoke<GrfSpecFeature::RailTypes>,    Invoke<GrfSpecFeature::AirportTiles>,  Invoke<GrfSpecFeature::RoadTypes>,     Invoke<GrfSpecFeature::TramTypes>,
-		Invoke<GrfSpecFeature::RoadStops>,    Invoke<GrfSpecFeature::Badges>,        Invoke<GrfSpecFeature::NewLandscape>,  nullptr /* GrfSpecFeature::FakeTowns */
+		Invoke<GrfSpecFeature::RoadStops>,    Invoke<GrfSpecFeature::Badges>,        Invoke<GrfSpecFeature::NewLandscape>,  nullptr  /* GrfSpecFeature::FakeTowns */
 	};
 
 	/**

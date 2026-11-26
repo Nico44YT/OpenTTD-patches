@@ -161,11 +161,13 @@ enum class ExpensesType : uint8_t {
 	RoadVehRun, ///< Running costs road vehicles.
 	AircraftRun, ///< Running costs aircraft.
 	ShipRun, ///< Running costs ships.
+	UtilityRun, ///< Running costs of utilities.
 	Property, ///< Property costs.
 	TrainRevenue, ///< Revenue from trains.
 	RoadVehRevenue, ///< Revenue from road vehicles.
 	AircraftRevenue, ///< Revenue from aircraft.
 	ShipRevenue, ///< Revenue from ships.
+	UtilityRevenue, ///< Revenue from Utilities, (Water, Electricity, etc...)
 	LoanInterest, ///< Interest payments over the loan.
 	Other, ///< Other expenses.
 	SharingCost, ///< Infrastructure sharing costs.

@@ -65,6 +65,7 @@ static const std::initializer_list<ExpensesType> _expenses_list_revenue = {
 	ExpensesType::RoadVehRevenue,
 	ExpensesType::AircraftRevenue,
 	ExpensesType::ShipRevenue,
+	ExpensesType::UtilityRevenue,
 	ExpensesType::SharingRevenue,
 };
 
@@ -74,6 +75,7 @@ static const std::initializer_list<ExpensesType> _expenses_list_operating_costs 
 	ExpensesType::RoadVehRun,
 	ExpensesType::AircraftRun,
 	ExpensesType::ShipRun,
+	ExpensesType::UtilityRun,
 	ExpensesType::Property,
 	ExpensesType::LoanInterest,
 	ExpensesType::SharingCost,

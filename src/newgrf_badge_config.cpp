@@ -13,6 +13,11 @@
 #include "newgrf.h"
 #include "newgrf_badge.h"
 #include "newgrf_badge_config.h"
+
+#include <iostream>
+#include <valarray>
+#include <winrt/base.h>
+
 #include "newgrf_badge_type.h"
 
 #include "table/strings.h"
@@ -26,15 +31,24 @@ public:
 
 	EnumIndexArray<std::vector<BadgeClassConfigItem>, GrfSpecFeature, GrfSpecFeature::End> features = {};
 
-	static constexpr GrfSpecFeatures CONFIGURABLE_FEATURES = {
-		GrfSpecFeature::Trains, GrfSpecFeature::RoadVehicles, GrfSpecFeature::Ships, GrfSpecFeature::Aircraft, GrfSpecFeature::Stations, GrfSpecFeature::Houses, GrfSpecFeature::Objects, GrfSpecFeature::RoadStops,
-	};
 
+	static constexpr GrfSpecFeatures CONFIGURABLE_FEATURES = {
+		GrfSpecFeature::Trains,
+		GrfSpecFeature::RoadVehicles,
+		GrfSpecFeature::Ships,
+		GrfSpecFeature::Aircraft,
+		GrfSpecFeature::Utilities,
+		GrfSpecFeature::Stations,
+		GrfSpecFeature::Houses,
+		GrfSpecFeature::Objects,
+		GrfSpecFeature::RoadStops,
+	};
 	static inline const EnumIndexArray<std::string_view, GrfSpecFeature, GrfSpecFeature::End> sections = {
 		"badges_trains", // GrfSpecFeature::Trains
 		"badges_roadvehicles", // GrfSpecFeature::RoadVehicles
 		"badges_ships", // GrfSpecFeature::Ships
 		"badges_aircraft", // GrfSpecFeature::Aircraft
+		"badges_utilities", // GrfSpecFeature::Utilities
 		"badges_stations", // GrfSpecFeature::Stations
 		{}, // GrfSpecFeature::Canals
 		{}, // GrfSpecFeature::Bridges
@@ -51,6 +65,7 @@ public:
 		{}, // GrfSpecFeature::AirportTiles
 		{}, // GrfSpecFeature::RoadTypes
 		{}, // GrfSpecFeature::TramTypes
+		{}, // GrfSpecFeature::UtilityTypes
 		"badges_roadstops", // GrfSpecFeature::RoadStops
 		{}, // GrfSpecFeature::Badges
 	};

@@ -863,6 +863,7 @@ static void CalculateRefitMasks()
 					{{   A, S   }, CT_GOODS,      {CargoClass::PieceGoods, CargoClass::Express}, {CargoClass::Liquid, CargoClass::Passengers, CargoClass::Refrigerated}},
 					{{   A, S   }, CT_FOOD,       {CargoClass::Refrigerated},                    {}},
 					{{         Y}, CT_CANDY,      {CargoClass::PieceGoods, CargoClass::Express}, {CargoClass::Liquid, CargoClass::Passengers}},
+					{{T, A, S, Y}, CT_ELECTRICITY,{CargoClass::Special}, {}},
 				};
 
 				if (e->type == VehicleType::Aircraft) {
@@ -1657,7 +1658,7 @@ static void ActivateOldTramDepot()
 static void FinalisePriceBaseMultipliers()
 {
 	/** Features, to which '_grf_id_overrides' applies. Currently vehicle features only. */
-	static constexpr GrfSpecFeatures override_features{GrfSpecFeature::Trains, GrfSpecFeature::RoadVehicles, GrfSpecFeature::Ships, GrfSpecFeature::Aircraft};
+	static constexpr GrfSpecFeatures override_features{GrfSpecFeature::Trains, GrfSpecFeature::RoadVehicles, GrfSpecFeature::Ships, GrfSpecFeature::Aircraft, GrfSpecFeature::Utilities};
 
 	/* Evaluate grf overrides */
 	int num_grfs = (uint)_grf_files.size();
@@ -2115,6 +2116,7 @@ GrfSpecFeature GetGrfSpecFeature(VehicleType type)
 		case VehicleType::Road: return GrfSpecFeature::RoadVehicles;
 		case VehicleType::Ship: return GrfSpecFeature::Ships;
 		case VehicleType::Aircraft: return GrfSpecFeature::Aircraft;
+		case VehicleType::Utility: return GrfSpecFeature::Utilities;
 		default: return GrfSpecFeature::Invalid;
 	}
 }
@@ -2131,6 +2133,7 @@ VehicleType GetVehicleType(GrfSpecFeature feature)
 		case GrfSpecFeature::RoadVehicles: return VehicleType::Road;
 		case GrfSpecFeature::Ships: return VehicleType::Ship;
 		case GrfSpecFeature::Aircraft: return VehicleType::Aircraft;
+		case GrfSpecFeature::Utilities: return VehicleType::Utility;
 		default: return VehicleType::Invalid;
 	}
 }

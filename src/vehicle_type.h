@@ -29,6 +29,7 @@ enum class VehicleType : uint8_t {
 	Road, ///< Road vehicle type.
 	Ship, ///< %Ship vehicle type.
 	Aircraft, ///< %Aircraft vehicle type.
+	Utility, ///< %Utility vehicle type.
 
 	CompanyEnd, ///< Last company-ownable type.
 

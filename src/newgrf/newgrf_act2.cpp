@@ -741,6 +741,7 @@ static void NewSpriteGroup(ByteReader &buf)
 				case GrfSpecFeature::RoadVehicles:
 				case GrfSpecFeature::Ships:
 				case GrfSpecFeature::Aircraft:
+				case GrfSpecFeature::Utilities:
 				case GrfSpecFeature::Stations:
 				case GrfSpecFeature::Canals:
 				case GrfSpecFeature::Cargoes:

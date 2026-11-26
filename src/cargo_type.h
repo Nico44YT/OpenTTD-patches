@@ -43,6 +43,7 @@ static constexpr CargoLabel CT_WOOD{"WOOD"}; ///< Cargo label for wood.
 static constexpr CargoLabel CT_IRON_ORE{"IORE"}; ///< Cargo label for iron ore.
 static constexpr CargoLabel CT_STEEL{"STEL"}; ///< Cargo label for steel.
 static constexpr CargoLabel CT_VALUABLES{"VALU"}; ///< Cargo label for valuables.
+static constexpr CargoLabel CT_ELECTRICITY{"ELEC"}; ///< Cargo label for electricity.
 
 /* Arctic */
 static constexpr CargoLabel CT_WHEAT{"WHEA"}; ///< Cargo label for wheat.
@@ -76,7 +77,7 @@ static constexpr CargoLabel CT_NONE = CT_PASSENGERS;
 
 static constexpr CargoLabel CT_INVALID{"\xFF\xFF\xFF\xFF"}; ///< Invalid cargo type.
 
-static constexpr CargoType NUM_ORIGINAL_CARGO{12}; ///< Original number of cargo types.
+static constexpr CargoType NUM_ORIGINAL_CARGO{13}; ///< Original number of cargo types.
 static constexpr CargoType NUM_CARGO{64}; ///< Maximum number of cargo types in a game.
 
 /* CARGO_AUTO_REFIT and CARGO_NO_REFIT are stored in save-games for refit-orders, so should not be changed. */

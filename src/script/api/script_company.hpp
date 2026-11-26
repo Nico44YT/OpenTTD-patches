@@ -118,11 +118,13 @@ public:
 		EXPENSES_ROADVEH_RUN  = to_underlying(::ExpensesType::RoadVehRun), ///< Running costs road vehicles.
 		EXPENSES_AIRCRAFT_RUN = to_underlying(::ExpensesType::AircraftRun), ///< Running costs aircraft.
 		EXPENSES_SHIP_RUN     = to_underlying(::ExpensesType::ShipRun), ///< Running costs ships.
+		EXPENSES_UTILITY_RUN  = to_underlying(::ExpensesType::UtilityRun), ///< Running costs utility.
 		EXPENSES_PROPERTY     = to_underlying(::ExpensesType::Property), ///< Property costs.
 		EXPENSES_TRAIN_INC    = to_underlying(::ExpensesType::TrainRevenue), ///< Revenue from trains.
 		EXPENSES_ROADVEH_INC  = to_underlying(::ExpensesType::RoadVehRevenue), ///< Revenue from road vehicles.
 		EXPENSES_AIRCRAFT_INC = to_underlying(::ExpensesType::AircraftRevenue), ///< Revenue from aircraft.
 		EXPENSES_SHIP_INC     = to_underlying(::ExpensesType::ShipRevenue), ///< Revenue from ships.
+		EXPENSES_UTILITY_INC  = to_underlying(::ExpensesType::UtilityRevenue), ///< Revenue from Utilities.
 		EXPENSES_LOAN_INT     = to_underlying(::ExpensesType::LoanInterest), ///< Interest payments over the loan.
 		EXPENSES_OTHER        = to_underlying(::ExpensesType::Other), ///< Other expenses.
 		EXPENSES_SHARING_COST = to_underlying(::ExpensesType::SharingCost), ///< Infrastructure sharing costs.

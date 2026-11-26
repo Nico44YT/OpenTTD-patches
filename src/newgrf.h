@@ -94,6 +94,7 @@ enum class GrfSpecFeature : uint8_t {
 	RoadVehicles, ///< Road vehicles feature
 	Ships, ///< Ships feature
 	Aircraft, ///< Aircraft feature
+	Utilities, ///< Utilities feature
 	Stations, ///< Stations feature
 	Canals, ///< Canals feature
 	Bridges, ///< Bridges feature

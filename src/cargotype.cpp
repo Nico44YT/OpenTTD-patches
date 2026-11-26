@@ -54,7 +54,7 @@ CargoType _cargo_id_mail = INVALID_CARGO;
  * This maps the original 12 cargo slots to their original label. If a climate dependent cargo is not present it will
  * map to CT_INVALID. For default cargoes this ends up as a 1:1 mapping via climate slot -> label -> cargo type.
  */
-static std::array<CargoLabel, 12> _climate_dependent_cargo_labels;
+static std::array<CargoLabel, 13> _climate_dependent_cargo_labels;
 
 /**
  * Default cargo translation for version 8+ NewGRFs.

@@ -86,6 +86,7 @@ static void FeatureNewName(ByteReader &buf)
 			case GrfSpecFeature::RoadVehicles:
 			case GrfSpecFeature::Ships:
 			case GrfSpecFeature::Aircraft:
+			case GrfSpecFeature::Utilities:
 				if (!generic) {
 					Engine *e = GetNewEngine(_cur_gps.grffile, GetVehicleType(feature), id, _cur_gps.grfconfig->flags.Test(GRFConfigFlag::Static));
 					if (e == nullptr) break;

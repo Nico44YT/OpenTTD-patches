@@ -56,6 +56,7 @@ STR_CARGO_PLURAL_TOFFEE                                         :Toffee
 STR_CARGO_PLURAL_BATTERIES                                      :Batteries
 STR_CARGO_PLURAL_PLASTIC                                        :Plastic
 STR_CARGO_PLURAL_FIZZY_DRINKS                                   :Fizzy Drinks
+STR_CARGO_PLURAL_ELECTRICITY                                    :Kilowatts
 
 # Singular cargo name
 STR_CARGO_SINGULAR_NOTHING                                      :
@@ -90,6 +91,7 @@ STR_CARGO_SINGULAR_TOFFEE                                       :Toffee
 STR_CARGO_SINGULAR_BATTERY                                      :Battery
 STR_CARGO_SINGULAR_PLASTIC                                      :Plastic
 STR_CARGO_SINGULAR_FIZZY_DRINK                                  :Fizzy Drink
+STR_CARGO_SINGULAR_ELECTRICITY                                  :Kilowatt
 
 # Quantity of cargo
 STR_QUANTITY_NOTHING                                            :
@@ -124,6 +126,7 @@ STR_QUANTITY_TOFFEE                                             :{WEIGHT_LONG} o
 STR_QUANTITY_BATTERIES                                          :{COMMA} batter{P y ies}
 STR_QUANTITY_PLASTIC                                            :{VOLUME_LONG} of plastic
 STR_QUANTITY_FIZZY_DRINKS                                       :{COMMA} fizzy drink{P "" s}
+STR_QUANTITY_ELECTRICITY                                        :{COMMA} kWh{P "" s}
 STR_QUANTITY_N_A                                                :N/A
 
 # Two letter abbreviation of cargo name
@@ -159,6 +162,7 @@ STR_ABBREV_TOFFEE                                               :TF
 STR_ABBREV_BATTERIES                                            :BA
 STR_ABBREV_PLASTIC                                              :PL
 STR_ABBREV_FIZZY_DRINKS                                         :FZ
+STR_ABBREV_ELECTRICITY                                          :EL
 STR_ABBREV_ALL                                                  :ALL
 
 # 'Mode' of transport for cargoes
@@ -168,6 +172,7 @@ STR_TONS                                                        :{COMMA}{NBSP}to
 STR_LITERS                                                      :{COMMA}{NBSP}litre{P "" s}
 STR_ITEMS                                                       :{COMMA}{NBSP}item{P "" s}
 STR_CRATES                                                      :{COMMA}{NBSP}crate{P "" s}
+STR_KWH                                                         :{COMMA}{NBSP}kWh{P "" s}
 
 STR_COLOUR_DEFAULT                                              :Default
 ###length 17
@@ -409,6 +414,7 @@ STR_TOOLBAR_TOOLTIP_BUILD_ROADS                                 :{BLACK}Build ro
 STR_TOOLBAR_TOOLTIP_BUILD_TRAMWAYS                              :{BLACK}Build tramway infrastructure
 STR_TOOLBAR_TOOLTIP_BUILD_SHIP_DOCKS                            :{BLACK}Build waterway infrastructure
 STR_TOOLBAR_TOOLTIP_BUILD_AIRPORTS                              :{BLACK}Build airports
+STR_TOOLBAR_TOOLTIP_BUILD_UTILITIES                             :{BLACK}Build utilities
 STR_TOOLBAR_TOOLTIP_LANDSCAPING                                 :{BLACK}Open landscaping menu, tree menu, or place a sign
 STR_TOOLBAR_TOOLTIP_SHOW_SOUND_MUSIC_WINDOW                     :{BLACK}Open sound/music window
 STR_TOOLBAR_TOOLTIP_SHOW_LAST_MESSAGE_NEWS                      :{BLACK}Open last message/news report, messages history or delete all messages
@@ -428,6 +434,7 @@ STR_SCENEDIT_TOOLBAR_TOWN_GENERATION_TOOLTIP                    :{BLACK}Build or
 STR_SCENEDIT_TOOLBAR_INDUSTRY_GENERATION_TOOLTIP                :{BLACK}Build or generate industries
 STR_SCENEDIT_TOOLBAR_ROAD_CONSTRUCTION_TOOLTIP                  :{BLACK}Build road infrastructure
 STR_SCENEDIT_TOOLBAR_TRAM_CONSTRUCTION_TOOLTIP                  :{BLACK}Build tramway infrastructure
+STR_SCENEDIT_TOOLBAR_UTILITY_CONSTRUCTION_TOOLTIP               :{BLACK}Build utilities.
 STR_SCENEDIT_TOOLBAR_PLANT_TREES_TOOLTIP                        :{BLACK}Plant trees. Ctrl+Click+Drag to select the area diagonally. Also press Shift to show cost estimate only
 STR_SCENEDIT_TOOLBAR_PLACE_SIGN_TOOLTIP                         :{BLACK}Place sign
 STR_SCENEDIT_TOOLBAR_PLACE_OBJECT_TOOLTIP                       :{BLACK}Place object. Ctrl+Click+Drag to select the area diagonally. Also press Shift to show cost estimate only
@@ -459,6 +466,7 @@ STR_SETTINGS_MENU_STATION_NAMES_LORRY                           :Lorry stops
 STR_SETTINGS_MENU_STATION_NAMES_BUS                             :Bus stops
 STR_SETTINGS_MENU_STATION_NAMES_SHIP                            :Docks
 STR_SETTINGS_MENU_STATION_NAMES_PLANE                           :Airports
+STR_SRTTINGS_MENU_STATION_NAMES_ELECTRICITY                     :Sub station
 STR_SETTINGS_MENU_STATION_NAMES_GHOST                           :Ghost
 STR_SETTINGS_MENU_WAYPOINTS_DISPLAYED                           :Waypoint names displayed
 STR_SETTINGS_MENU_SIGNS_DISPLAYED                               :Signs displayed
@@ -518,8 +526,11 @@ STR_ROAD_MENU_TRAM_CONSTRUCTION                                 :Tramway constru
 # Waterways construction menu
 STR_WATERWAYS_MENU_WATERWAYS_CONSTRUCTION                       :Waterways construction
 
-# Aairport construction menu
+# Airport construction menu
 STR_AIRCRAFT_MENU_AIRPORT_CONSTRUCTION                          :Airport construction
+
+# Utility construction menu
+STR_ELECTRICITY_MENU_UTILITY_CONSTRUCTION                       :Electricity construction
 
 # Landscaping menu
 STR_LANDSCAPING_MENU_LANDSCAPING                                :Landscaping
@@ -4005,18 +4016,20 @@ STR_FINANCES_OPERATING_EXPENSES_TITLE                           :{WHITE}Operatin
 STR_FINANCES_CAPITAL_EXPENSES_TITLE                             :{WHITE}Capital Expenses
 
 
-###length 13
+###length 15
 STR_FINANCES_SECTION_CONSTRUCTION                               :{GOLD}Construction
 STR_FINANCES_SECTION_NEW_VEHICLES                               :{GOLD}New Vehicles
 STR_FINANCES_SECTION_TRAIN_RUNNING_COSTS                        :{GOLD}Trains
 STR_FINANCES_SECTION_ROAD_VEHICLE_RUNNING_COSTS                 :{GOLD}Road Vehicles
 STR_FINANCES_SECTION_AIRCRAFT_RUNNING_COSTS                     :{GOLD}Aircraft
 STR_FINANCES_SECTION_SHIP_RUNNING_COSTS                         :{GOLD}Ships
+STR_FINANCES_SECTION_UTILITY_RUNNING_COSTS                      :{GOLD}Utilities
 STR_FINANCES_SECTION_INFRASTRUCTURE                             :{GOLD}Infrastructure
 STR_FINANCES_SECTION_TRAIN_REVENUE                              :{GOLD}Trains
 STR_FINANCES_SECTION_ROAD_VEHICLE_REVENUE                       :{GOLD}Road Vehicles
 STR_FINANCES_SECTION_AIRCRAFT_REVENUE                           :{GOLD}Aircraft
 STR_FINANCES_SECTION_SHIP_REVENUE                               :{GOLD}Ships
+STR_FINANCES_SECTION_UTILITY_REVENUE                            :{GOLD}Utilities
 STR_FINANCES_SECTION_LOAN_INTEREST                              :{GOLD}Loan Interest
 STR_FINANCES_SECTION_OTHER                                      :{GOLD}Other
 

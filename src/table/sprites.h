@@ -1182,6 +1182,7 @@ static const SpriteID SPR_IMG_ZOOMOUT         = 736;
 static const SpriteID SPR_IMG_BUILDRAIL       = 727;
 static const SpriteID SPR_IMG_BUILDROAD       = 728;
 static const SpriteID SPR_IMG_BUILDTRAMS      = SPR_OPENTTD_BASE + 179;
+static const SpriteID SPR_IMG_BUILDUTILITIES  = SPR_OPENTTD_BASE + 180;
 static const SpriteID SPR_IMG_BUILDWATER      = 729;
 static const SpriteID SPR_IMG_BUILDAIR        = 730;
 static const SpriteID SPR_IMG_LANDSCAPING     = 4083;
@@ -1255,6 +1256,7 @@ static const SpriteID SPR_CARGO_TOFFEE                = 4320;
 static const SpriteID SPR_CARGO_BUBBLES               = 4321;
 static const SpriteID SPR_CARGO_PLASTIC               = 4322;
 static const SpriteID SPR_CARGO_BATTERIES             = 4323;
+static const SpriteID SPR_CARGO_ELECTRICITY           = 4323; // TODO Change to custom
 static const SpriteID SPR_CARGO_NOTHING               = SPR_ASCII_SPACE; // Placeholder for void cargo slots.
 
 /* Effect vehicles */

@@ -1509,6 +1509,12 @@ static CallBackFunction ToolbarScenBuildTramClick(Window *w)
 	return CallBackFunction::None;
 }
 
+static CallBackFunction ToolbarScenBuildUtilityClick(Window *w)
+{
+	ShowDropDownList(w, GetScenRoadTypeDropDownList(RoadTramType::Tram, true), _last_built_tramtype, WID_TE_TRAMS, 140, GetToolbarDropDownOptions(DropDownOption::Filterable), &_tramtype_filter);
+	return CallBackFunction::None;
+}
+
 /**
  * Handle click on the entry in the Build Tram menu.
  *
@@ -1516,6 +1522,13 @@ static CallBackFunction ToolbarScenBuildTramClick(Window *w)
  * @return #CallBackFunction::None
  */
 static CallBackFunction ToolbarScenBuildTram(int index)
+{
+	_last_built_tramtype = (RoadType)index;
+	ShowBuildRoadScenToolbar(_last_built_tramtype);
+	return CallBackFunction::None;
+}
+
+static CallBackFunction ToolbarScenBuildUtility(int index)
 {
 	_last_built_tramtype = (RoadType)index;
 	ShowBuildRoadScenToolbar(_last_built_tramtype);
@@ -2305,6 +2318,7 @@ struct MainToolbarWindow : Window {
 			case MTHK_BUILD_TRAM: ShowBuildRoadToolbar(_last_built_tramtype); break;
 			case MTHK_BUILD_DOCKS: ShowBuildDocksToolbar(); break;
 			case MTHK_BUILD_AIRPORT: ShowBuildAirToolbar(); break;
+			case MTHK_BUILD_UTILITY: ShowBuildRailToolbar(_last_built_railtype); break; //TODO change to custom
 			case MTHK_BUILD_TREES: ShowBuildTreesToolbar(); break;
 			case MTHK_MUSIC: ShowMusicWindow(); break;
 			case MTHK_SCRIPT_DEBUG: ShowScriptDebugWindow(); break;
@@ -2412,6 +2426,7 @@ struct MainToolbarWindow : Window {
 		Hotkey(0, "build_tram", MTHK_BUILD_TRAM),
 		Hotkey(WKC_SHIFT | WKC_F9, "build_docks", MTHK_BUILD_DOCKS),
 		Hotkey(WKC_SHIFT | WKC_F10, "build_airport", MTHK_BUILD_AIRPORT),
+		Hotkey(0, "build_utility", MTHK_BUILD_UTILITY),
 		Hotkey(WKC_SHIFT | WKC_F11, "build_trees", MTHK_BUILD_TREES),
 		Hotkey(WKC_SHIFT | WKC_F12, "music", MTHK_MUSIC),
 		Hotkey(0, "ai_debug", MTHK_SCRIPT_DEBUG),
@@ -2527,29 +2542,29 @@ static WindowDesc _toolb_normal_desc(__FILE__, __LINE__,
 /* --- Toolbar handling for the scenario editor */
 
 static MenuClickedProc * const _scen_toolbar_dropdown_procs[] = {
-	nullptr,              // 0
-	nullptr,              // 1
-	MenuClickSettings,    // 2
-	MenuClickSaveLoad,    // 3
-	nullptr,              // 4
-	nullptr,              // 5
-	nullptr,              // 6
-	nullptr,              // 7
-	MenuClickMap,         // 8
-	nullptr,              // 9
-	nullptr,              // 10
-	ToolbarScenGenLand,   // 11
-	ToolbarScenGenTown,   // 12
-	nullptr,              // 13
-	ToolbarScenBuildRoad, // 14
-	ToolbarScenBuildTram, // 15
-	nullptr,              // 16
-	nullptr,              // 17
-	nullptr,              // 18
-	nullptr,              // 19
-	MenuClickMusicWindow, // 20
-	MenuClickHelp,        // 21
-	nullptr,              // 22
+	nullptr,              		// 0
+	nullptr,              		// 1
+	MenuClickSettings,    		// 2
+	MenuClickSaveLoad,    		// 3
+	nullptr,              		// 4
+	nullptr,              		// 5
+	nullptr,              		// 6
+	nullptr,              		// 7
+	MenuClickMap,         		// 8
+	nullptr,              		// 9
+	nullptr,              		// 10
+	ToolbarScenGenLand,   		// 11
+	ToolbarScenGenTown,   		// 12
+	nullptr,              		// 13
+	ToolbarScenBuildRoad, 		// 14
+	ToolbarScenBuildTram, 		// 15
+	ToolbarScenBuildUtility,	// 16
+	nullptr,             		// 17
+	nullptr,             		// 18
+	nullptr,             		// 19
+	MenuClickMusicWindow,		// 20
+	MenuClickHelp,       		// 21
+	nullptr,             		// 22
 };
 
 static ToolbarButtonProc * const _scen_toolbar_button_procs[] = {
@@ -2569,6 +2584,7 @@ static ToolbarButtonProc * const _scen_toolbar_button_procs[] = {
 	ToolbarScenGenIndustry,
 	ToolbarScenBuildRoadClick,
 	ToolbarScenBuildTramClick,
+	ToolbarScenBuildUtilityClick,
 	ToolbarScenBuildDocks,
 	ToolbarScenPlantTrees,
 	ToolbarScenPlaceSign,
@@ -2609,6 +2625,7 @@ enum class MainToolbarEditorHotkeys : int32_t {
 	GenerateTown, ///< Open town generation window.
 	BuildRoad, ///< Open toolbar window with tools for building roads.
 	BuildTram, ///< Open toolbar window with tools for building tramways.
+	BuildUtility, ///< Open toolbar window with tools for building utilities.
 };
 
 struct ScenarioEditorToolbarWindow : Window {
@@ -2723,6 +2740,7 @@ struct ScenarioEditorToolbarWindow : Window {
 				case MainToolbarEditorHotkeys::GenerateTown: ShowFoundTownWindow(); break;
 				case MainToolbarEditorHotkeys::BuildRoad: ToolbarScenBuildRoadClick(this); break;
 				case MainToolbarEditorHotkeys::BuildTram: ToolbarScenBuildTramClick(this); break;
+				case MainToolbarEditorHotkeys::BuildUtility: ToolbarScenBuildUtilityClick(this); break;
 				default: return EventState::NotHandled;
 			}
 			if (cbf != CallBackFunction::None) _last_started_action = cbf;
@@ -2820,6 +2838,7 @@ struct ScenarioEditorToolbarWindow : Window {
 		Hotkey(WKC_F6, "gen_industry", MainToolbarEditorHotkeys::GenerateIndustry),
 		Hotkey(WKC_F7, "build_road", MainToolbarEditorHotkeys::BuildRoad),
 		Hotkey(0, "build_tram", MainToolbarEditorHotkeys::BuildTram),
+		Hotkey(0, "build_utility", MainToolbarEditorHotkeys::BuildUtility),
 		Hotkey(WKC_F8, "build_docks", MainToolbarEditorHotkeys::BuildWater),
 		Hotkey(WKC_F9, "build_trees", MainToolbarEditorHotkeys::BuildTrees),
 		Hotkey(WKC_F10, "build_sign", MainToolbarEditorHotkeys::Sign),
