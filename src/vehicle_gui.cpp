@@ -2803,7 +2803,7 @@ public:
 			if ((this->vli.vtype == VehicleType::Ship && st->facilities.Test(StationFacility::Dock)) ||
 					(this->vli.vtype == VehicleType::Train && st->facilities.Test(StationFacility::Train)) ||
 					(this->vli.vtype == VehicleType::Aircraft && st->facilities.Test(StationFacility::Airport)) ||
-					(this->vli.vtype == VehicleType::Road && st->facilities.Any({StationFacility::BusStop, StationFacility::TruckStop}))) {
+					(this->vli.vtype == VehicleType::Road && st->facilities.Any({StationFacility::BusStop, StationFacility::TruckStop, StationFacility::BusTruckStop}))) {
 				Command<Commands::MassChangeOrder>::Post(this->vli.index, this->vli.vtype, OT_GOTO_STATION, this->GetCargoFilter(), GetStationIndex(tile));
 				ResetObjectToPlace();
 				return;

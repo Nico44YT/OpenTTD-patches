@@ -295,7 +295,7 @@ protected:
 
 	static inline FilterState initial_state = {
 		{false, 0},
-		{StationFacility::Train, StationFacility::TruckStop, StationFacility::BusStop, StationFacility::Airport, StationFacility::Dock},
+		{StationFacility::Train, StationFacility::TruckStop, StationFacility::BusStop, StationFacility::BusTruckStop, StationFacility::Airport, StationFacility::Dock},
 		true,
 		ALL_CARGOTYPES,
 	};
@@ -451,7 +451,7 @@ protected:
 					return facilities.Test(StationFacility::Train);
 
 				case VehicleType::Road:
-					return facilities.Test(RoadVehicle::From(v)->IsBus() ? StationFacility::BusStop : StationFacility::TruckStop);
+					return facilities.Test(RoadVehicle::From(v)->IsBus() ? StationFacility::BusStop : StationFacility::TruckStop) || facilities.Test(StationFacility::BusTruckStop); // TODO probably totally not what is meant - Nico
 
 				case VehicleType::Aircraft:
 					return facilities.Test(StationFacility::Airport);
@@ -466,7 +466,7 @@ protected:
 
 		robin_hood::unordered_flat_set<StationID> seen_stations;
 		for (const OrderList *l : OrderList::Iterate()) {
-			if (facilities != StationFacilities{ StationFacility::Train, StationFacility::TruckStop, StationFacility::BusStop, StationFacility::Airport, StationFacility::Dock }) {
+			if (facilities != StationFacilities{ StationFacility::Train, StationFacility::TruckStop, StationFacility::BusStop, StationFacility::BusTruckStop, StationFacility::Airport, StationFacility::Dock }) {
 				if (!can_vehicle_use_facility(l->GetFirstSharedVehicle())) continue;
 			}
 
@@ -746,7 +746,7 @@ public:
 					this->LowerWidget(i);
 				}
 
-				this->filter.facilities = {StationFacility::Train, StationFacility::TruckStop, StationFacility::BusStop, StationFacility::Airport, StationFacility::Dock};
+				this->filter.facilities = {StationFacility::Train, StationFacility::TruckStop, StationFacility::BusStop, StationFacility::BusTruckStop, StationFacility::Airport, StationFacility::Dock};
 				this->stations.ForceRebuild();
 				this->SetDirty();
 				break;
@@ -1609,7 +1609,7 @@ struct StationViewWindow : public Window {
 		/* disable some buttons */
 		this->SetWidgetDisabledState(WID_SV_RENAME,   st->owner != _local_company);
 		this->SetWidgetDisabledState(WID_SV_TRAINS,   !st->facilities.Test(StationFacility::Train) && !have_veh_types.Test(VehicleType::Train));
-		this->SetWidgetDisabledState(WID_SV_ROADVEHS, !st->facilities.Test(StationFacility::TruckStop) && !st->facilities.Test(StationFacility::BusStop) && !have_veh_types.Test(VehicleType::Road));
+		this->SetWidgetDisabledState(WID_SV_ROADVEHS, !st->facilities.Test(StationFacility::TruckStop) && !st->facilities.Test(StationFacility::BusStop) && !st->facilities.Test(StationFacility::BusTruckStop) && !have_veh_types.Test(VehicleType::Road));
 		this->SetWidgetDisabledState(WID_SV_SHIPS,    !st->facilities.Test(StationFacility::Dock) && !have_veh_types.Test(VehicleType::Ship));
 		this->SetWidgetDisabledState(WID_SV_PLANES,   !st->facilities.Test(StationFacility::Airport) && !have_veh_types.Test(VehicleType::Aircraft));
 		this->SetWidgetDisabledState(WID_SV_CLOSE_AIRPORT, !st->facilities.Test(StationFacility::Airport) || st->owner != _local_company || st->owner == OWNER_NONE); // Also consider SE, where _local_company == OWNER_NONE

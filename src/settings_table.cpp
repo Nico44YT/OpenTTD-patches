@@ -235,6 +235,7 @@ static void StationSpreadChanged(int32_t new_value)
 	InvalidateWindowData(WindowClass::BuildStation, 0);
 	InvalidateWindowData(WindowClass::BuildBusStation, 0);
 	InvalidateWindowData(WindowClass::BuildTruckStation, 0);
+	InvalidateWindowData(WindowClass::BuildBusTruckStation, 0);
 }
 
 static void UpdateConsists(int32_t new_value)

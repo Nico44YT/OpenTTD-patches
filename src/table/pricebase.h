@@ -22,6 +22,7 @@ static const EnumIndexArray<PriceBaseSpec, Price, Price::End> _price_base_specs 
 	PriceBaseSpec(600, PriceCategory::Construction, GrfSpecFeature::End, Price::Invalid), // Price::BuildStationAirport
 	PriceBaseSpec(200, PriceCategory::Construction, GrfSpecFeature::End, Price::Invalid), // Price::BuildStationBus
 	PriceBaseSpec(200, PriceCategory::Construction, GrfSpecFeature::End, Price::Invalid), // Price::BuildStationTruck
+	PriceBaseSpec(300, PriceCategory::Construction, GrfSpecFeature::End, Price::Invalid), // Price::BuildStationBusTruck
 	PriceBaseSpec(350, PriceCategory::Construction, GrfSpecFeature::End, Price::Invalid), // Price::BuildStationDock
 	PriceBaseSpec(400000, PriceCategory::Construction, GrfSpecFeature::Trains, Price::Invalid), // Price::BuildVehicleTrain
 	PriceBaseSpec(2000, PriceCategory::Construction, GrfSpecFeature::Trains, Price::Invalid), // Price::BuildVehicleWagon
@@ -47,6 +48,7 @@ static const EnumIndexArray<PriceBaseSpec, Price, Price::End> _price_base_specs 
 	PriceBaseSpec(30, PriceCategory::Construction, GrfSpecFeature::End, Price::Invalid), // Price::ClearStationAirport
 	PriceBaseSpec(50, PriceCategory::Construction, GrfSpecFeature::End, Price::Invalid), // Price::ClearStationBus
 	PriceBaseSpec(50, PriceCategory::Construction, GrfSpecFeature::End, Price::Invalid), // Price::ClearStationTruck
+	PriceBaseSpec(100, PriceCategory::Construction, GrfSpecFeature::End, Price::Invalid), // Price::ClearStationBusTruck
 	PriceBaseSpec(55, PriceCategory::Construction, GrfSpecFeature::End, Price::Invalid), // Price::ClearStationDock
 	PriceBaseSpec(1600, PriceCategory::Construction, GrfSpecFeature::End, Price::Invalid), // Price::ClearHouse
 	PriceBaseSpec(40, PriceCategory::Construction, GrfSpecFeature::End, Price::Invalid), // Price::ClearRoad

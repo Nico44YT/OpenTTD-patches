@@ -33,6 +33,7 @@ TEST_CASE("MayHaveRoad - Station")
 	CHECK(test_station_type(StationType::Airport, false));
 	CHECK(test_station_type(StationType::Truck, true));
 	CHECK(test_station_type(StationType::Bus, true));
+	CHECK(test_station_type(StationType::BusAndTruck, true));
 	CHECK(test_station_type(StationType::Oilrig, false));
 	CHECK(test_station_type(StationType::Dock, false));
 	CHECK(test_station_type(StationType::Buoy, false));

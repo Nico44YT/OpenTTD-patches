@@ -3023,7 +3023,7 @@ static bool ConUnblockBayRoadStops(std::span<std::string_view> argv)
 	}
 
 	for (Station *st : Station::Iterate()) {
-		for (RoadStopType rs_type : { RoadStopType::Bus, RoadStopType::Truck }) {
+		for (RoadStopType rs_type : { RoadStopType::Bus, RoadStopType::Truck, RoadStopType::Combined }) {
 			for (RoadStop *rs = st->GetPrimaryRoadStop(rs_type); rs != nullptr; rs = rs->next) {
 				if (IsBayRoadStopTile(rs->xy)) {
 					rs->DebugClearOccupancy();

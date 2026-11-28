@@ -278,6 +278,7 @@ enum class OptionMenuEntries : uint8_t {
 	ShowTrainStationNames, ///< Toggle visibility of train station names.
 	ShowLorryStationNames, ///< Toggle visibility of lorry station names.
 	ShowBusStationNames, ///< Toggle visibility of bus station names.
+	ShowBusLorryStationNames, ///< Toggle visibility of bus-lorry station names.
 	ShowDockNames, ///< Toggle visibility of dock names.
 	ShowAirportNames, ///< Toggle visibility of airport names.
 	ShowGhostStationNames, ///< Toggle visibility of ghost station names.
@@ -321,6 +322,7 @@ static CallBackFunction ToolbarOptionsClick(Window *w)
 	list.push_back(MakeDropDownListCheckedItem(_facility_display_opt.Test(StationFacility::Train),     STR_SETTINGS_MENU_STATION_NAMES_TRAIN,     OptionMenuEntries::ShowTrainStationNames, false, false, 1));
 	list.push_back(MakeDropDownListCheckedItem(_facility_display_opt.Test(StationFacility::TruckStop), STR_SETTINGS_MENU_STATION_NAMES_LORRY,     OptionMenuEntries::ShowLorryStationNames, false, false, 1));
 	list.push_back(MakeDropDownListCheckedItem(_facility_display_opt.Test(StationFacility::BusStop),   STR_SETTINGS_MENU_STATION_NAMES_BUS,       OptionMenuEntries::ShowBusStationNames, false, false, 1));
+	list.push_back(MakeDropDownListCheckedItem(_facility_display_opt.Test(StationFacility::BusTruckStop), STR_SETTINGS_MENU_STATION_NAMES_BUS_LORRY,     OptionMenuEntries::ShowBusLorryStationNames, false, false, 1));
 	list.push_back(MakeDropDownListCheckedItem(_facility_display_opt.Test(StationFacility::Dock),      STR_SETTINGS_MENU_STATION_NAMES_SHIP,      OptionMenuEntries::ShowDockNames, false, false, 1));
 	list.push_back(MakeDropDownListCheckedItem(_facility_display_opt.Test(StationFacility::Airport),   STR_SETTINGS_MENU_STATION_NAMES_PLANE,     OptionMenuEntries::ShowAirportNames, false, false, 1));
 	list.push_back(MakeDropDownListCheckedItem(_facility_display_opt.Test(STATION_FACILITY_GHOST),     STR_SETTINGS_MENU_STATION_NAMES_GHOST,     OptionMenuEntries::ShowGhostStationNames, false, false, 1));
@@ -364,6 +366,7 @@ static CallBackFunction MenuClickSettings(int index)
 		case OptionMenuEntries::ShowTrainStationNames: _facility_display_opt.Flip(StationFacility::Train); break;
 		case OptionMenuEntries::ShowLorryStationNames: _facility_display_opt.Flip(StationFacility::TruckStop); break;
 		case OptionMenuEntries::ShowBusStationNames: _facility_display_opt.Flip(StationFacility::BusStop); break;
+		case OptionMenuEntries::ShowBusLorryStationNames: _facility_display_opt.Flip(StationFacility::BusTruckStop); break;
 		case OptionMenuEntries::ShowDockNames: _facility_display_opt.Flip(StationFacility::Dock); break;
 		case OptionMenuEntries::ShowAirportNames: _facility_display_opt.Flip(StationFacility::Airport); break;
 		case OptionMenuEntries::ShowGhostStationNames: _facility_display_opt.Flip(STATION_FACILITY_GHOST); break;
@@ -1172,6 +1175,7 @@ static void UsePickerTool(TileIndex tile)
 
 				case StationType::Truck:
 				case StationType::Bus:
+				case StationType::BusAndTruck:
 				case StationType::RoadWaypoint:
 					ShowBuildRoadStopPickerAndSelect(station_type, GetRoadStopSpec(tile), HasRoadTypeRoad(tile) ? RoadTramType::Road : RoadTramType::Tram);
 					break;

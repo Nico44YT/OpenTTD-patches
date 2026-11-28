@@ -218,6 +218,10 @@ template <bool Tfrom, bool Tvia>
 	for (const RoadStop *rs = ::Station::Get(station_id)->GetPrimaryRoadStop(RoadStopType::Truck); rs != nullptr; rs = rs->next) {
 		if (::GetPresentRoadTypes(rs->xy).Test(::RoadType(road_type))) return true;
 	}
+	for (const RoadStop *rs = ::Station::Get(station_id)->GetPrimaryRoadStop(RoadStopType::Combined); rs != nullptr; rs = rs->next) {
+		if (::GetPresentRoadTypes(rs->xy).Test(::RoadType(road_type))) return true;
+	}
+
 
 	return false;
 }

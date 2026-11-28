@@ -1212,15 +1212,16 @@ static Trackdir RoadFindPathToDest(RoadVehicle *v, TileIndex tile, DiagDirection
 			ts.trackdirs = TRACKDIR_BIT_NONE;
 		} else {
 			/* Our station */
-			RoadStopType rstype = v->IsBus() ? RoadStopType::Bus : RoadStopType::Truck;
+			RoadStopType vehicle_type = v->IsBus() ? RoadStopType::Bus : RoadStopType::Truck;
+			RoadStopType tile_type = GetRoadStopType(tile);
 
-			if (GetRoadStopType(tile) != rstype) {
+			if (vehicle_type != tile_type && tile_type != RoadStopType::Combined) {
 				/* Wrong station type */
 				ts.trackdirs = TRACKDIR_BIT_NONE;
 			} else {
 				/* Proper station type, check if there is free loading bay */
 				if (!_settings_game.pf.roadveh_queue && IsBayRoadStopTile(tile) &&
-						!RoadStop::GetByTile(tile, rstype)->HasFreeBay()) {
+						!RoadStop::GetByTile(tile, vehicle_type)->HasFreeBay()) {
 					/* Station is full and RV queuing is off */
 					ts.trackdirs = TRACKDIR_BIT_NONE;
 				}
@@ -1616,7 +1617,7 @@ static bool CheckRestartLoadingAtRoadStop(RoadVehicle *v)
 			(next_order->GetRoadVehTravelDirection() == DiagDirection::Invalid || next_order->GetRoadVehTravelDirection() == DirToDiagDir(v->direction)) &&
 			!(next_order->GetNonStopType() & ONSF_NO_STOP_AT_DESTINATION_STATION) &&
 			IsInfraTileUsageAllowed(VehicleType::Road, v->owner, v->tile) &&
-			GetRoadStopType(v->tile) == (v->IsBus() ? RoadStopType::Bus : RoadStopType::Truck) &&
+			(GetRoadStopType(v->tile) == (v->IsBus() ? RoadStopType::Bus : RoadStopType::Truck) || GetRoadStopType(v->tile) == RoadStopType::Combined) &&
 			GetStationIndex(v->tile) == station_id) {
 		v->current_order.Free();
 		ProcessOrders(v);
@@ -2017,7 +2018,7 @@ again:
 			if (v->cur_speed == 0 && IsInsideMM(v->state, RVSB_IN_DT_ROAD_STOP, RVSB_IN_DT_ROAD_STOP_END) &&
 					v->current_order.ShouldStopAtStation(v, GetStationIndex(v->tile), false) &&
 					IsInfraTileUsageAllowed(VehicleType::Road, v->owner, v->tile) && !v->current_order.IsType(OT_LEAVESTATION) &&
-					GetRoadStopType(v->tile) == (v->IsBus() ? RoadStopType::Bus : RoadStopType::Truck)) {
+					(GetRoadStopType(v->tile) == (v->IsBus() ? RoadStopType::Bus : RoadStopType::Truck) || GetRoadStopType(v->tile) == RoadStopType::Combined)) {
 				uint8_t cur_overtaking = IsRoadVehicleOnOtherSideOfRoad(v) ? RVSB_DRIVE_SIDE : 0;
 				if (cur_overtaking != v->overtaking) v->SetRoadVehicleOvertaking(cur_overtaking);
 				Station *st = Station::GetByTile(v->tile);
@@ -2054,7 +2055,7 @@ again:
 			(IsInsideMM(v->state, RVSB_IN_DT_ROAD_STOP, RVSB_IN_DT_ROAD_STOP_END) &&
 			v->current_order.ShouldStopAtStation(v, GetStationIndex(v->tile), false) &&
 			IsInfraTileUsageAllowed(VehicleType::Road, v->owner, v->tile) &&
-			GetRoadStopType(v->tile) == (v->IsBus() ? RoadStopType::Bus : RoadStopType::Truck) &&
+			(GetRoadStopType(v->tile) == (v->IsBus() ? RoadStopType::Bus : RoadStopType::Truck) || GetRoadStopType(v->tile) == RoadStopType::Combined) &&
 			v->frame == RVC_DRIVE_THROUGH_STOP_FRAME))) {
 
 		RoadStop *rs = RoadStop::GetByTile(v->tile, GetRoadStopType(v->tile));

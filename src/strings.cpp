@@ -2445,6 +2445,7 @@ static void StationGetSpecialString(StringBuilder builder, StationFacilities x)
 	if (x.Test(StationFacility::Train)) builder.Utf8Encode(SCC_TRAIN);
 	if (x.Test(StationFacility::TruckStop)) builder.Utf8Encode(SCC_LORRY);
 	if (x.Test(StationFacility::BusStop)) builder.Utf8Encode(SCC_BUS);
+	if (x.Test(StationFacility::BusTruckStop)) builder.Utf8Encode(SCC_BUS_LORRY);
 	if (x.Test(StationFacility::Dock)) builder.Utf8Encode(SCC_SHIP);
 	if (x.Test(StationFacility::Airport)) builder.Utf8Encode(SCC_PLANE);
 }

@@ -65,6 +65,7 @@ enum class CargoClass : uint8_t {
 	Potable      = 13, ///< Potable / food / clean.
 	NonPotable   = 14, ///< Non-potable / non-food / dirty.
 	Special      = 15, ///< Special bit used for livery refit tricks instead of normal cargoes.
+	Electricity  = 16, ///< Electricity
 };
 
 /** Bitset of \c CargoClass elements. */

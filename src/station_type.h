@@ -40,6 +40,7 @@ enum class StationType : uint8_t {
 	Buoy, ///< Waypoint for ships.
 	RailWaypoint, ///< Waypoint for trains.
 	RoadWaypoint, ///< Waypoint for trucks and busses.
+	BusAndTruck, ///< Road stop for busses and trucks.
 	End, ///< End marker.
 };
 
@@ -47,6 +48,7 @@ enum class StationType : uint8_t {
 enum class RoadStopType : uint8_t {
 	Bus,   ///< A standard stop for buses
 	Truck, ///< A standard stop for trucks
+	Combined, ///< A stop for buses and trains
 	End,   ///< End of valid types
 };
 
@@ -57,6 +59,7 @@ enum class StationFacility : uint8_t {
 	BusStop   = 2, ///< Station with bus stops
 	Airport   = 3, ///< Station with an airport
 	Dock      = 4, ///< Station with a dock
+	BusTruckStop = 5, ///< Station with bus and truck stops
 	Waypoint  = 7, ///< Station is a waypoint
 };
 
@@ -135,6 +138,7 @@ using AirportAnimationTriggers = EnumBitSet<AirportAnimationTrigger, uint8_t>;
 static constexpr uint CA_NONE = 0; ///< Catchment when the station has no facilities
 static constexpr uint CA_BUS = 3; ///< Catchment for bus stops with "modified catchment" enabled
 static constexpr uint CA_TRUCK = 3; ///< Catchment for truck stops with "modified catchment" enabled
+static constexpr uint CA_BUS_TRUCK = 3; ///< Catchment for combined bus and truck stops with "modified catchment" enabled
 static constexpr uint CA_TRAIN = 4; ///< Catchment for train stations with "modified catchment" enabled
 static constexpr uint CA_DOCK = 5; ///< Catchment for docks with "modified catchment" enabled
 

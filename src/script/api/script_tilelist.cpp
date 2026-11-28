@@ -201,8 +201,8 @@ ScriptTileList_StationType::ScriptTileList_StationType(StationID station_id, Scr
 	/* Convert ScriptStation::StationType to ::StationType, but do it in a
 	 *  bitmask, so we can scan for multiple entries at the same time. */
 	if ((station_type & ScriptStation::STATION_TRAIN) != 0)      station_types.Set(::StationType::Rail);
-	if ((station_type & ScriptStation::STATION_TRUCK_STOP) != 0) station_types.Set(::StationType::Truck);
-	if ((station_type & ScriptStation::STATION_BUS_STOP) != 0)   station_types.Set(::StationType::Bus);
+	if ((station_type & ScriptStation::STATION_TRUCK_STOP) != 0) station_types.Set({::StationType::Truck, ::StationType::BusAndTruck});
+	if ((station_type & ScriptStation::STATION_BUS_STOP) != 0)   station_types.Set({::StationType::Bus, ::StationType::BusAndTruck});
 	if ((station_type & ScriptStation::STATION_AIRPORT) != 0)    station_types.Set({::StationType::Airport, ::StationType::Oilrig});
 	if ((station_type & ScriptStation::STATION_DOCK) != 0)       station_types.Set({::StationType::Dock, ::StationType::Oilrig});
 

@@ -347,10 +347,17 @@ bool RoadStop::Enter(RoadVehicle *rv)
 {
 	const Station *st = Station::GetByTile(tile);
 
-	for (RoadStop *rs = st->GetPrimaryRoadStop(type);; rs = rs->next) {
-		if (rs->xy == tile) return rs;
-		assert(rs->next != nullptr);
+	RoadStop *rs = st->GetPrimaryRoadStop(type);
+
+	if (rs == nullptr && (type == RoadStopType::Bus || type == RoadStopType::Truck)) {
+		rs = st->GetPrimaryRoadStop(RoadStopType::Combined);
 	}
+
+	for (; rs != nullptr; rs = rs->next) {
+		if (rs->xy == tile) return rs;
+	}
+
+	return nullptr;
 }
 
 void RoadStop::DebugClearOccupancy()

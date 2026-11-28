@@ -28,6 +28,7 @@
 #include "base_media_func.h"
 #include "base_media_graphics.h"
 #include "base_media_sounds.h"
+#include "error.h"
 #include "core/string_consumer.hpp"
 
 #include "table/sprites.h"
@@ -69,6 +70,7 @@ static SpriteFile &LoadGrfFile(const std::string &filename, SpriteID load_index,
 	while (LoadNextSprite(load_index, file, sprite_id)) {
 		load_index++;
 		sprite_id++;
+		//Debug(sprite, 2, "Currently loading Index:{}, File:{}", load_index, file.GetFilename());
 		if (load_index >= MAX_SPRITES) {
 			UserError("Too many sprites. Recompile with higher MAX_SPRITES value or remove some custom GRF files.");
 		}
@@ -240,6 +242,9 @@ static void LoadSpriteTables()
 	}
 
 	LoadGrfFile("innerhighlight.grf", SPR_ZONING_INNER_HIGHLIGHT_BASE, false);
+
+	/* Fork Specific sprites */
+	LoadGrfFile("nico_extra.grf", SPR_NICO_EXTRA_BASE, false);
 
 	/* Load route step graphics */
 	LoadGrfFile("route_step.grf", SPR_ROUTE_STEP_BASE, false);

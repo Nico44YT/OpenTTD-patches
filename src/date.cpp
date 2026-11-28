@@ -361,6 +361,7 @@ static void OnNewCalendarYear()
 	InvalidateWindowClassesData(WindowClass::BuildStation);
 	InvalidateWindowClassesData(WindowClass::BuildBusStation);
 	InvalidateWindowClassesData(WindowClass::BuildTruckStation);
+	InvalidateWindowClassesData(WindowClass::BuildBusTruckStation);
 	if (_network_server) NetworkServerCalendarYearlyLoop();
 
 	if (CalTime::CurYear() == _settings_client.gui.semaphore_build_before) ResetSignalVariant();

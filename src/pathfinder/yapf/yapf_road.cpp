@@ -323,16 +323,34 @@ public:
 	/** @copydoc CYapfBaseT::PfDetectDestinationTileFunc */
 	inline bool PfDetectDestinationTile(TileIndex tile, Trackdir td)
 	{
-		if (this->dest_station != StationID::Invalid()) {
-			return IsTileType(tile, TileType::Station) &&
-				GetStationIndex(tile) == this->dest_station &&
-				(this->station_type == GetStationType(tile)) &&
-				(this->non_artic || IsDriveThroughStopTile(tile)) &&
-				(this->dest_trackdirs == INVALID_TRACKDIR_BIT ||
-				(IsDriveThroughStopTile(tile) ? HasTrackdir(this->dest_trackdirs, td) : HasTrackdir(this->dest_trackdirs, DiagDirToDiagTrackdir(ReverseDiagDir(GetBayRoadStopDir(tile))))));
+		if (this->dest_station == StationID::Invalid()) {
+			return tile == this->dest_tile && HasTrackdir(this->dest_trackdirs, td);
 		}
 
-		return tile == this->dest_tile && HasTrackdir(this->dest_trackdirs, td);
+		if (!IsTileType(tile, TileType::Station)) return false;
+		if (GetStationIndex(tile) != this->dest_station) return false;
+
+		StationType tile_station_type = GetStationType(tile);
+		if (this->station_type != tile_station_type &&
+			!(tile_station_type == StationType::BusAndTruck &&
+			  (this->station_type == StationType::Bus ||
+			   this->station_type == StationType::Truck ||
+			   this->station_type == StationType::BusAndTruck))) {
+			return false;
+			   }
+
+		if (!this->non_artic && !IsDriveThroughStopTile(tile)) return false;
+
+		Trackdir destination_trackdir = IsDriveThroughStopTile(tile)
+			? td
+			: DiagDirToDiagTrackdir(ReverseDiagDir(GetBayRoadStopDir(tile)));
+
+		if (this->dest_trackdirs != INVALID_TRACKDIR_BIT &&
+			!HasTrackdir(this->dest_trackdirs, destination_trackdir)) {
+			return false;
+			}
+
+		return true;
 	}
 
 	/** @copydoc CYapfBaseT::PfCalcEstimateFunc */
@@ -414,8 +432,20 @@ public:
 		if (st) {
 			const RoadStop *stop = st->GetPrimaryRoadStop(v);
 			if (stop != nullptr && (IsDriveThroughStopTile(stop->xy) || stop->GetNextRoadStop(v) != nullptr)) {
+				RoadStopType type = GetRoadStopType(stop->xy);
 				multiple_targets = true;
-				non_cached_area = v->IsBus() ? st->bus_station : st->truck_station;
+				switch (type) {
+					case RoadStopType::Bus:
+						non_cached_area = st->bus_station;
+						break;
+					case RoadStopType::Truck:
+						non_cached_area = st->truck_station;
+						break;
+					case RoadStopType::Combined:
+						non_cached_area = st->bus_and_truck_station;
+						break;
+					default: NOT_REACHED();
+				}
 				non_cached_area.Expand(YAPF_ROADVEH_PATH_CACHE_DESTINATION_LIMIT);
 			}
 		}

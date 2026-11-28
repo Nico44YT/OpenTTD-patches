@@ -47,9 +47,10 @@ public:
 		STATION_TRAIN      = ::StationFacilities{::StationFacility::Train}.base(),     ///< Train station
 		STATION_TRUCK_STOP = ::StationFacilities{::StationFacility::TruckStop}.base(), ///< Truck station
 		STATION_BUS_STOP   = ::StationFacilities{::StationFacility::BusStop}.base(),   ///< Bus station
+		STATION_BUS_TRUCK_STOP = ::StationFacilities{::StationFacility::BusTruckStop}.base(), ///< Combined Bus/Truck station
 		STATION_AIRPORT    = ::StationFacilities{::StationFacility::Airport}.base(),   ///< Airport
 		STATION_DOCK       = ::StationFacilities{::StationFacility::Dock}.base(),      ///< Dock
-		STATION_ANY        = STATION_TRAIN | STATION_TRUCK_STOP | STATION_BUS_STOP | STATION_AIRPORT | STATION_DOCK, ///< All station types
+		STATION_ANY        = STATION_TRAIN | STATION_TRUCK_STOP | STATION_BUS_STOP | STATION_BUS_TRUCK_STOP | STATION_AIRPORT | STATION_DOCK, ///< All station types
 	};
 
 	/**

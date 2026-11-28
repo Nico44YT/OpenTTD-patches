@@ -777,6 +777,10 @@ bool LoadNextSprite(SpriteID load_index, SpriteFile &file, uint file_sprite_id)
 	sc->count = count;
 	sc->flags = control_flags;
 
+	Debug(sprite, 2, "Loaded GRF sprite: file={}, file_sprite_id={}, global_index={}, type={}",
+	file.GetSimplifiedFilename(), file_sprite_id, load_index,
+	type == SpriteType::Recolour ? "recolour" : "normal");
+
 	return true;
 }
 

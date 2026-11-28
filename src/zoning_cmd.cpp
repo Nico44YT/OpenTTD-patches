@@ -242,14 +242,14 @@ SpriteID TileZoneCheckUnservedIndustriesEvaluation(TileIndex tile, Owner owner)
 
 		for (const Station *st : ind->stations_near) {
 			if (st->owner == owner) {
-				if (st->facilities == StationFacility::BusStop || st->facilities == StationFacility::TruckStop) {
+				if (st->facilities == StationFacility::BusStop || st->facilities == StationFacility::TruckStop || st->facilities == StationFacility::BusTruckStop) {
 					for (const auto &p : ind->Produced()) {
-						if (p.cargo != INVALID_CARGO && st->facilities.Test(IsCargoInClass(p.cargo, CargoClass::Passengers) ? StationFacility::BusStop : StationFacility::TruckStop)) {
+						if (p.cargo != INVALID_CARGO && (st->facilities.Test(IsCargoInClass(p.cargo, CargoClass::Passengers) ? StationFacility::BusStop : StationFacility::TruckStop) || st->facilities.Test(StationFacility::BusTruckStop))) {
 							return ZONING_INVALID_SPRITE_ID;
 						}
 					}
 					for (const auto &a : ind->Accepted()) {
-						if (a.cargo != INVALID_CARGO && st->facilities.Test(IsCargoInClass(a.cargo, CargoClass::Passengers) ? StationFacility::BusStop : StationFacility::TruckStop)) {
+						if (a.cargo != INVALID_CARGO && (st->facilities.Test(IsCargoInClass(a.cargo, CargoClass::Passengers) ? StationFacility::BusStop : StationFacility::TruckStop) || st->facilities.Test(StationFacility::BusTruckStop))) {
 							return ZONING_INVALID_SPRITE_ID;
 						}
 					}

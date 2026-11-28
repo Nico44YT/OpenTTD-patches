@@ -137,10 +137,11 @@ uint32_t RoadStopScopeResolver::GetVariable(uint16_t variable, uint32_t paramete
 		/* View/rotation */
 		case 0x40: return this->view;
 
-		/* Stop type: 0: bus, 1: truck, 2: waypoint */
+		/* Stop type: 0: bus, 1: truck, 3: combined, 2: waypoint */
 		case 0x41:
 			if (this->type == StationType::Bus) return 0;
 			if (this->type == StationType::Truck) return 1;
+			if (this->type == StationType::BusAndTruck) return 3;
 			return 2;
 
 		/* Terrain type */
@@ -631,6 +632,11 @@ bool GetIfStopIsForType(const RoadStopSpec *roadstopspec, RoadStopType rs, RoadT
 		case RoadStopType::Truck:
 			if (roadstopspec->stop_type == ROADSTOPTYPE_FREIGHT) return true;
 			break;
+
+		case RoadStopType::Combined:
+			if (roadstopspec->stop_type == ROADSTOPTYPE_ALL) return true;
+			break;
+
 
 		default:
 			NOT_REACHED();

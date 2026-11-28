@@ -93,6 +93,7 @@ void AfterLoadCompanyStats()
 
 					case StationType::Bus:
 					case StationType::Truck:
+					case StationType::BusAndTruck:
 					case StationType::RoadWaypoint: {
 						/* Iterate all present road types as each can have a different owner. */
 						for (RoadTramType rtt : ROADTRAMTYPES_ALL) {

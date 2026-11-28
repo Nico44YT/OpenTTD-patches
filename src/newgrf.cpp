@@ -863,6 +863,8 @@ static void CalculateRefitMasks()
 					{{   A, S   }, CT_GOODS,      {CargoClass::PieceGoods, CargoClass::Express}, {CargoClass::Liquid, CargoClass::Passengers, CargoClass::Refrigerated}},
 					{{   A, S   }, CT_FOOD,       {CargoClass::Refrigerated},                    {}},
 					{{         Y}, CT_CANDY,      {CargoClass::PieceGoods, CargoClass::Express}, {CargoClass::Liquid, CargoClass::Passengers}},
+					{{T, A      }, CT_ELECTRICITY,{CargoClass::Electricity}, {}},
+					{{T, A      }, CT_URANIUM,    {CargoClass::Hazardous}, {}},
 				};
 
 				if (e->type == VehicleType::Aircraft) {

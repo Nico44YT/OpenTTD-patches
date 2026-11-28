@@ -1908,6 +1908,10 @@ NetworkCompanyStatsArray NetworkGetCompanyStats()
 			if (s->facilities.Test(StationFacility::Train)) npi->num_station[NetworkVehicleType::Train]++;
 			if (s->facilities.Test(StationFacility::TruckStop)) npi->num_station[NetworkVehicleType::Truck]++;
 			if (s->facilities.Test(StationFacility::BusStop)) npi->num_station[NetworkVehicleType::Bus]++;
+			if (s->facilities.Test(StationFacility::BusTruckStop)) { // TODO probably not what is intended? - Nico
+				npi->num_station[NetworkVehicleType::Truck]++;
+				npi->num_station[NetworkVehicleType::Bus]++;
+			}
 			if (s->facilities.Test(StationFacility::Airport)) npi->num_station[NetworkVehicleType::Aircraft]++;
 			if (s->facilities.Test(StationFacility::Dock)) npi->num_station[NetworkVehicleType::Ship]++;
 		}

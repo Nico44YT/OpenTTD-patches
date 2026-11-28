@@ -161,7 +161,7 @@ struct BaseStation : StationPool::PoolItem<&_station_pool> {
 	 */
 	inline bool IsInUse() const
 	{
-		return this->facilities.Any({StationFacility::Train, StationFacility::TruckStop, StationFacility::BusStop, StationFacility::Airport, StationFacility::Dock});
+		return this->facilities.Any({StationFacility::Train, StationFacility::TruckStop, StationFacility::BusStop, StationFacility::BusTruckStop, StationFacility::Airport, StationFacility::Dock});
 	}
 
 	inline uint8_t GetRoadStopRandomBits(TileIndex tile) const

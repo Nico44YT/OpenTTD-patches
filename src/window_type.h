@@ -467,6 +467,12 @@ enum class WindowClass : uint16_t {
 	BuildTruckStation,
 
 	/**
+	 * Build bus-truck station; %Window numbers:
+	 *   - #TransportType::Road = #BuildRoadStationWidgets
+	 */
+	BuildBusTruckStation,
+
+	/**
 	 * Build depot; %Window numbers:
 	 *   - #TransportType::Water = #BuildDockDepotWidgets
 	 *   - #TransportType::Rail = #BuildRailDepotWidgets

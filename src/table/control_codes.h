@@ -203,6 +203,7 @@ enum StringControlCode : uint16_t {
 	SCC_TRAIN            = SCC_SPRITE_START + 0xB4,
 	SCC_LORRY            = SCC_SPRITE_START + 0xB5,
 	SCC_BUS              = SCC_SPRITE_START + 0xB6,
+	SCC_BUS_LORRY		 = SCC_SPRITE_START + 0xB6, //TODO I'm so done with this codebase - Nico
 	SCC_PLANE            = SCC_SPRITE_START + 0xB7,
 	SCC_SHIP             = SCC_SPRITE_START + 0xB8,
 	SCC_SUPERSCRIPT_M1   = SCC_SPRITE_START + 0xB9,

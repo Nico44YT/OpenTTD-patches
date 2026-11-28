@@ -3564,6 +3564,7 @@ static inline uint32_t ViewportMapGetColourRoutes(const TileIndex tile, TileType
 				case StationType::Airport: return IS32(PC_RED);
 				case StationType::Truck:   return IS32(PC_ORANGE);
 				case StationType::Bus:     return IS32(PC_YELLOW);
+				case StationType::BusAndTruck: return IS32(PC_LIGHT_YELLOW);
 				case StationType::Dock:    return IS32(PC_LIGHT_BLUE);
 				default:                   return IS32(0xFF);
 			}

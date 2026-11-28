@@ -10,6 +10,7 @@
 #ifndef PATHFINDER_FUNC_H
 #define PATHFINDER_FUNC_H
 
+#include "../newgrf_spritegroup.h"
 #include "../tile_track_func.h"
 #include "../waypoint_base.h"
 
@@ -19,13 +20,21 @@
  * as defined by its tile are (st->train_station)
  * @param station The station to calculate the distance to
  * @param tile The tile from where to calculate the distance
- * @param station_type the station type to get the closest tile of
+ * @param requested_station_type the station type to get the closest tile of
  * @return The closest station tile to the given tile.
  */
-inline TileIndex CalcClosestStationTile(StationID station, TileIndex tile, StationType station_type)
+inline TileIndex CalcClosestStationTile(StationID station, TileIndex tile, StationType requested_station_type)
 {
 	const BaseStation *st = BaseStation::Get(station);
-	TileArea ta = st->GetTileArea(station_type);
+
+	if (requested_station_type == StationType::Truck || requested_station_type == StationType::Bus) {
+		StationType present_station_type = GetStationType(st->xy);
+		if (present_station_type == StationType::BusAndTruck) {
+			requested_station_type = StationType::BusAndTruck;
+		}
+	}
+	
+	TileArea ta = st->GetTileArea(requested_station_type);
 
 	/* If the rail station is (temporarily) not present, use the station sign to drive near the station */
 	if (ta.IsEmpty()) return st->xy;

@@ -304,6 +304,42 @@ static const DrawTileSeqStruct _station_display_datas_74[] = {
 	TILE_SEQ_LINE( 0,  0,  0,  3, 13, 10, SPR_BUS_STOP_NW_BUILD_C | (1U << PALETTE_MODIFIER_COLOUR))
 };
 
+static const DrawTileSeqStruct _station_display_data_bus_truck_stop_ne[] = {
+	TILE_SEQ_LINE( 0, 15,  0, 13,  1, 10, SPR_TRUCK_STOP_NE_BUILD_A | (1U << PALETTE_MODIFIER_COLOUR))
+	TILE_SEQ_LINE(13,  0,  0,  3, 16, 10, SPR_TRUCK_STOP_NE_BUILD_B | (1U << PALETTE_MODIFIER_COLOUR))
+	TILE_SEQ_LINE( 2,  0,  0, 11,  1, 10, SPR_TRUCK_STOP_NE_BUILD_C | (1U << PALETTE_MODIFIER_COLOUR))
+};
+
+static const DrawTileSeqStruct _station_display_data_bus_truck_stop_se[] = {
+	TILE_SEQ_LINE(15,  3,  0,  1, 13, 10, SPR_TRUCK_STOP_SE_BUILD_A | (1U << PALETTE_MODIFIER_COLOUR))
+	TILE_SEQ_LINE( 0,  0,  0, 16,  3, 10, SPR_TRUCK_STOP_SE_BUILD_B | (1U << PALETTE_MODIFIER_COLOUR))
+	TILE_SEQ_LINE( 0,  3,  0,  1, 11, 10, SPR_TRUCK_STOP_SE_BUILD_C | (1U << PALETTE_MODIFIER_COLOUR))
+};
+
+static const DrawTileSeqStruct _station_display_data_bus_truck_stop_sw[] = {
+	TILE_SEQ_LINE( 3,  0,  0, 13,  1, 10, SPR_TRUCK_STOP_SW_BUILD_A | (1U << PALETTE_MODIFIER_COLOUR))
+	TILE_SEQ_LINE( 0,  0,  0,  3, 16, 10, SPR_TRUCK_STOP_SW_BUILD_B | (1U << PALETTE_MODIFIER_COLOUR))
+	TILE_SEQ_LINE( 3, 15,  0, 11,  1, 10, SPR_TRUCK_STOP_SW_BUILD_C | (1U << PALETTE_MODIFIER_COLOUR))
+};
+
+static const DrawTileSeqStruct _station_display_data_bus_truck_stop_nw[] = {
+	TILE_SEQ_LINE( 0,  0,  0,  1, 13, 10, SPR_TRUCK_STOP_NW_BUILD_A | (1U << PALETTE_MODIFIER_COLOUR))
+	TILE_SEQ_LINE( 0, 13,  0, 16,  3, 10, SPR_TRUCK_STOP_NW_BUILD_B | (1U << PALETTE_MODIFIER_COLOUR))
+	TILE_SEQ_LINE(15,  2,  0,  1, 11, 10, SPR_TRUCK_STOP_NW_BUILD_C | (1U << PALETTE_MODIFIER_COLOUR))
+};
+
+/** Drive-through bus-truck stop X. */
+static const DrawTileSeqStruct _station_display_data_bus_truck_stop_x[] = {
+	TILE_SEQ_LINE( 0,  0,  0,  16,  3, 16, SPR_BUS_STOP_DT_X_W | (1U << PALETTE_MODIFIER_COLOUR))
+	TILE_SEQ_LINE( 0, 13,  0,  16,  3, 16, SPR_BUS_STOP_DT_X_E | (1U << PALETTE_MODIFIER_COLOUR))
+};
+
+/** Drive-through bus-truck stop Y. */
+static const DrawTileSeqStruct _station_display_data_bus_truck_stop_y[] = {
+	TILE_SEQ_LINE(13,  0,  0,  3,  16, 16, SPR_BUS_STOP_DT_Y_W | (1U << PALETTE_MODIFIER_COLOUR))
+	TILE_SEQ_LINE( 0,  0,  0,  3,  16, 16, SPR_BUS_STOP_DT_Y_E | (1U << PALETTE_MODIFIER_COLOUR))
+};
+
 static const DrawTileSeqStruct _station_display_datas_76[] = {
 	TILE_SEQ_LINE( 0,  4,  0, 16,  8,  8, SPR_DOCK_SLOPE_NE | (1U << PALETTE_MODIFIER_COLOUR))
 };
@@ -846,6 +882,15 @@ static const DrawTileSpriteSpan _station_display_datas_bus[] = {
 	TILE_SPRITE_LINE(SPR_ROAD_PAVED_STRAIGHT_Y,      _station_display_datas_0171)
 };
 
+static const DrawTileSpriteSpan _station_display_datas_bus_truck[] = {
+	TILE_SPRITE_LINE(SPR_BUS_TRUCK_STOP_NE_GROUND   | (1U << PALETTE_MODIFIER_COLOUR), _station_display_data_bus_truck_stop_ne)
+	TILE_SPRITE_LINE(SPR_BUS_TRUCK_STOP_SE_GROUND   | (1U << PALETTE_MODIFIER_COLOUR), _station_display_data_bus_truck_stop_se)
+	TILE_SPRITE_LINE(SPR_BUS_TRUCK_STOP_SW_GROUND   | (1U << PALETTE_MODIFIER_COLOUR), _station_display_data_bus_truck_stop_sw)
+	TILE_SPRITE_LINE(SPR_BUS_TRUCK_STOP_NW_GROUND   | (1U << PALETTE_MODIFIER_COLOUR), _station_display_data_bus_truck_stop_nw)
+	TILE_SPRITE_LINE(SPR_ROAD_PAVED_STRAIGHT_X,      _station_display_data_bus_truck_stop_x)
+	TILE_SPRITE_LINE(SPR_ROAD_PAVED_STRAIGHT_Y,      _station_display_data_bus_truck_stop_y)
+};
+
 static const DrawTileSpriteSpan _station_display_datas_road_waypoint[] = {
 	TILE_SPRITE_NULL()
 	TILE_SPRITE_NULL()
@@ -896,6 +941,7 @@ static constexpr EnumIndexArray<std::span<const DrawTileSpriteSpan>, StationType
 	_station_display_datas_airport,
 	_station_display_datas_truck,
 	_station_display_datas_bus,
+	_station_display_datas_bus_truck,
 	_station_display_datas_oilrig,
 	_station_display_datas_dock,
 	_station_display_datas_buoy,

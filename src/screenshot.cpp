@@ -615,6 +615,8 @@ static PixelColour GetTopographyValue(TileIndex tile)
 				return PC_BLACK;
 			case StationType::Bus:
 				return PC_BLACK;
+			case StationType::BusAndTruck:
+				return PC_BLACK;
 			case StationType::Oilrig:
 			case StationType::Dock:
 				return PC_GREY;
@@ -709,6 +711,8 @@ static PixelColour GetIndustryValue(TileIndex tile)
 			case StationType::Truck:
 				return PC_GREY;
 			case StationType::Bus:
+				return PC_GREY;
+			case StationType::BusAndTruck:
 				return PC_GREY;
 			case StationType::Oilrig:
 			case StationType::Dock:

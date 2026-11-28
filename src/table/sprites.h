@@ -360,8 +360,40 @@ static const SpriteID SPR_ZONING_INNER_HIGHLIGHT_PURPLE     = SPR_ZONING_INNER_H
 static const SpriteID SPR_ZONING_INNER_HIGHLIGHT_BROWN      = SPR_ZONING_INNER_HIGHLIGHT_BASE + 26;
 static const SpriteID SPR_ZONING_INNER_HIGHLIGHT_YELLOW     = SPR_ZONING_INNER_HIGHLIGHT_BASE + 27;
 
+/* Fork Specific sprites */
+static const SpriteID SPR_NICO_EXTRA_BASE          = SPR_ZONING_INNER_HIGHLIGHT_BASE + ZONING_INNER_HIGHLIGHT_SPRITE_COUNT;
+static const SpriteID SPR_CARGO_ELECTRICITY        = SPR_NICO_EXTRA_BASE + 11;
+static const SpriteID SPR_CARGO_URANIUM            = SPR_NICO_EXTRA_BASE + 12;
+
+static const SpriteID SPR_BUS_TRUCK_STOP_DT_Y_W = SPR_ROADSTOP_BASE + 4;
+static const SpriteID SPR_BUS_TRUCK_STOP_DT_Y_E = SPR_ROADSTOP_BASE + 5;
+static const SpriteID SPR_BUS_TRUCK_STOP_DT_X_W = SPR_ROADSTOP_BASE + 6;
+static const SpriteID SPR_BUS_TRUCK_STOP_DT_X_E = SPR_ROADSTOP_BASE + 7;
+static const SpriteID SPR_BUS_TRUCK_STOP_NE_GROUND        = 2708;
+static const SpriteID SPR_BUS_TRUCK_STOP_SE_GROUND        = 2709;
+static const SpriteID SPR_BUS_TRUCK_STOP_SW_GROUND        = 2710;
+static const SpriteID SPR_BUS_TRUCK_STOP_NW_GROUND        = 2711;
+static const SpriteID SPR_BUS_TRUCK_STOP_NE_BUILD_A       = 2712;
+static const SpriteID SPR_BUS_TRUCK_STOP_SE_BUILD_A       = 2713;
+static const SpriteID SPR_BUS_TRUCK_STOP_SW_BUILD_A       = 2714;
+static const SpriteID SPR_BUS_TRUCK_STOP_NW_BUILD_A       = 2715;
+static const SpriteID SPR_BUS_TRUCK_STOP_NE_BUILD_B       = 2716;
+static const SpriteID SPR_BUS_TRUCK_STOP_SE_BUILD_B       = 2717;
+static const SpriteID SPR_BUS_TRUCK_STOP_SW_BUILD_B       = 2718;
+static const SpriteID SPR_BUS_TRUCK_STOP_NW_BUILD_B       = 2719;
+static const SpriteID SPR_BUS_TRUCK_STOP_NE_BUILD_C       = 2720;
+static const SpriteID SPR_BUS_TRUCK_STOP_SE_BUILD_C       = 2721;
+static const SpriteID SPR_BUS_TRUCK_STOP_SW_BUILD_C       = 2722;
+static const SpriteID SPR_BUS_TRUCK_STOP_NW_BUILD_C       = 2723;
+
+static const SpriteID SPR_IMG_BUS_TRUCK_STATION     = 750;
+
+
+// 12 is offset for some fucking shit idk man, just keep it there
+static const uint16_t NICO_EXTRA_SPRITE_COUNT = 12 + 6;
+
 /* Sprites for the route step marker. */
-static const SpriteID SPR_ROUTE_STEP_BASE          = SPR_ZONING_INNER_HIGHLIGHT_BASE + ZONING_INNER_HIGHLIGHT_SPRITE_COUNT;
+static const SpriteID SPR_ROUTE_STEP_BASE          = SPR_NICO_EXTRA_BASE + NICO_EXTRA_SPRITE_COUNT;
 static const SpriteID SPR_ROUTE_STEP_TOP           = SPR_ROUTE_STEP_BASE + 0;
 static const SpriteID SPR_ROUTE_STEP_MIDDLE        = SPR_ROUTE_STEP_BASE + 1;
 static const SpriteID SPR_ROUTE_STEP_BOTTOM        = SPR_ROUTE_STEP_BASE + 2;
@@ -398,39 +430,40 @@ static const SpriteID SPR_FOUNDATION_BASE = 989;
 static const SpriteID SPR_SHADOW_CELL = 1004;
 
 /* Objects spritenumbers */
-static const SpriteID SPR_TRANSMITTER             = 2601;
-static const SpriteID SPR_LIGHTHOUSE              = 2602;
-static const SpriteID SPR_TINYHQ_NORTH            = 2603;
-static const SpriteID SPR_TINYHQ_EAST             = 2604;
-static const SpriteID SPR_TINYHQ_WEST             = 2605;
-static const SpriteID SPR_TINYHQ_SOUTH            = 2606;
-static const SpriteID SPR_SMALLHQ_NORTH           = 2607;
-static const SpriteID SPR_SMALLHQ_EAST            = 2608;
-static const SpriteID SPR_SMALLHQ_WEST            = 2609;
-static const SpriteID SPR_SMALLHQ_SOUTH           = 2610;
-static const SpriteID SPR_MEDIUMHQ_NORTH          = 2611;
-static const SpriteID SPR_MEDIUMHQ_NORTH_WALL     = 2612;
-static const SpriteID SPR_MEDIUMHQ_EAST           = 2613;
-static const SpriteID SPR_MEDIUMHQ_EAST_WALL      = 2614;
-static const SpriteID SPR_MEDIUMHQ_WEST           = 2615;
-static const SpriteID SPR_MEDIUMHQ_WEST_WALL      = 2616; // very tiny piece of wall
-static const SpriteID SPR_MEDIUMHQ_SOUTH          = 2617;
-static const SpriteID SPR_LARGEHQ_NORTH_GROUND    = 2618;
-static const SpriteID SPR_LARGEHQ_NORTH_BUILD     = 2619;
-static const SpriteID SPR_LARGEHQ_EAST_GROUND     = 2620;
-static const SpriteID SPR_LARGEHQ_EAST_BUILD      = 2621;
-static const SpriteID SPR_LARGEHQ_WEST_GROUND     = 2622;
-static const SpriteID SPR_LARGEHQ_WEST_BUILD      = 2623;
-static const SpriteID SPR_LARGEHQ_SOUTH           = 2624;
-static const SpriteID SPR_HUGEHQ_NORTH_GROUND     = 2625;
-static const SpriteID SPR_HUGEHQ_NORTH_BUILD      = 2626;
-static const SpriteID SPR_HUGEHQ_EAST_GROUND      = 2627;
-static const SpriteID SPR_HUGEHQ_EAST_BUILD       = 2628;
-static const SpriteID SPR_HUGEHQ_WEST_GROUND      = 2629;
-static const SpriteID SPR_HUGEHQ_WEST_BUILD       = 2630;
-static const SpriteID SPR_HUGEHQ_SOUTH            = 2631;
+static const uint16_t OBJECT_BASE = 2600;
+static const SpriteID SPR_TRANSMITTER             = OBJECT_BASE + 1;
+static const SpriteID SPR_LIGHTHOUSE              = OBJECT_BASE + 2;
+static const SpriteID SPR_TINYHQ_NORTH            = OBJECT_BASE + 3;
+static const SpriteID SPR_TINYHQ_EAST             = OBJECT_BASE + 4;
+static const SpriteID SPR_TINYHQ_WEST             = OBJECT_BASE + 5;
+static const SpriteID SPR_TINYHQ_SOUTH            = OBJECT_BASE + 6;
+static const SpriteID SPR_SMALLHQ_NORTH           = OBJECT_BASE + 7;
+static const SpriteID SPR_SMALLHQ_EAST            = OBJECT_BASE + 8;
+static const SpriteID SPR_SMALLHQ_WEST            = OBJECT_BASE + 9;
+static const SpriteID SPR_SMALLHQ_SOUTH           = OBJECT_BASE + 10;
+static const SpriteID SPR_MEDIUMHQ_NORTH          = OBJECT_BASE + 11;
+static const SpriteID SPR_MEDIUMHQ_NORTH_WALL     = OBJECT_BASE + 12;
+static const SpriteID SPR_MEDIUMHQ_EAST           = OBJECT_BASE + 13;
+static const SpriteID SPR_MEDIUMHQ_EAST_WALL      = OBJECT_BASE + 14;
+static const SpriteID SPR_MEDIUMHQ_WEST           = OBJECT_BASE + 15;
+static const SpriteID SPR_MEDIUMHQ_WEST_WALL      = OBJECT_BASE + 16; // very tiny piece of wall
+static const SpriteID SPR_MEDIUMHQ_SOUTH          = OBJECT_BASE + 17;
+static const SpriteID SPR_LARGEHQ_NORTH_GROUND    = OBJECT_BASE + 18;
+static const SpriteID SPR_LARGEHQ_NORTH_BUILD     = OBJECT_BASE + 19;
+static const SpriteID SPR_LARGEHQ_EAST_GROUND     = OBJECT_BASE + 20;
+static const SpriteID SPR_LARGEHQ_EAST_BUILD      = OBJECT_BASE + 21;
+static const SpriteID SPR_LARGEHQ_WEST_GROUND     = OBJECT_BASE + 22;
+static const SpriteID SPR_LARGEHQ_WEST_BUILD      = OBJECT_BASE + 23;
+static const SpriteID SPR_LARGEHQ_SOUTH           = OBJECT_BASE + 24;
+static const SpriteID SPR_HUGEHQ_NORTH_GROUND     = OBJECT_BASE + 25;
+static const SpriteID SPR_HUGEHQ_NORTH_BUILD      = OBJECT_BASE + 26;
+static const SpriteID SPR_HUGEHQ_EAST_GROUND      = OBJECT_BASE + 27;
+static const SpriteID SPR_HUGEHQ_EAST_BUILD       = OBJECT_BASE + 28;
+static const SpriteID SPR_HUGEHQ_WEST_GROUND      = OBJECT_BASE + 29;
+static const SpriteID SPR_HUGEHQ_WEST_BUILD       = OBJECT_BASE + 30;
+static const SpriteID SPR_HUGEHQ_SOUTH            = OBJECT_BASE + 31;
 static const SpriteID SPR_CONCRETE_GROUND         = 1420;
-static const SpriteID SPR_STATUE_COMPANY          = 2632;
+static const SpriteID SPR_STATUE_COMPANY          = OBJECT_BASE + 32;
 static const SpriteID SPR_BOUGHT_LAND             = 4790;
 
 /* sprites for rail and rail stations*/

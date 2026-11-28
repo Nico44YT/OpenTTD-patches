@@ -56,6 +56,8 @@ STR_CARGO_PLURAL_TOFFEE                                         :Toffee
 STR_CARGO_PLURAL_BATTERIES                                      :Batteries
 STR_CARGO_PLURAL_PLASTIC                                        :Plastic
 STR_CARGO_PLURAL_FIZZY_DRINKS                                   :Fizzy Drinks
+STR_CARGO_PLURAL_ELECTRICITY                                    :Kilowatts
+STR_CARGO_PLURAL_URANIUM                                        :Uranium
 
 # Singular cargo name
 STR_CARGO_SINGULAR_NOTHING                                      :
@@ -90,6 +92,8 @@ STR_CARGO_SINGULAR_TOFFEE                                       :Toffee
 STR_CARGO_SINGULAR_BATTERY                                      :Battery
 STR_CARGO_SINGULAR_PLASTIC                                      :Plastic
 STR_CARGO_SINGULAR_FIZZY_DRINK                                  :Fizzy Drink
+STR_CARGO_SINGULAR_ELECTRICITY                                  :Kilowatt
+STR_CARGO_SINGULAR_URANIUM                                      :Uranium
 
 # Quantity of cargo
 STR_QUANTITY_NOTHING                                            :
@@ -124,6 +128,8 @@ STR_QUANTITY_TOFFEE                                             :{WEIGHT_LONG} o
 STR_QUANTITY_BATTERIES                                          :{COMMA} batter{P y ies}
 STR_QUANTITY_PLASTIC                                            :{VOLUME_LONG} of plastic
 STR_QUANTITY_FIZZY_DRINKS                                       :{COMMA} fizzy drink{P "" s}
+STR_QUANTITY_ELECTRICITY                                        :{COMMA} kWh of electricity
+STR_QUANTITY_URANIUM                                            :{WEIGHT_LONG} of uranium
 STR_QUANTITY_N_A                                                :N/A
 
 # Two letter abbreviation of cargo name
@@ -159,6 +165,8 @@ STR_ABBREV_TOFFEE                                               :TF
 STR_ABBREV_BATTERIES                                            :BA
 STR_ABBREV_PLASTIC                                              :PL
 STR_ABBREV_FIZZY_DRINKS                                         :FZ
+STR_ABBREV_ELECTRICITY                                          :EL
+STR_ABBREV_URANIUM                                              :UR
 STR_ABBREV_ALL                                                  :ALL
 
 # 'Mode' of transport for cargoes
@@ -168,6 +176,7 @@ STR_TONS                                                        :{COMMA}{NBSP}to
 STR_LITERS                                                      :{COMMA}{NBSP}litre{P "" s}
 STR_ITEMS                                                       :{COMMA}{NBSP}item{P "" s}
 STR_CRATES                                                      :{COMMA}{NBSP}crate{P "" s}
+STR_UNIT                                                        :{COMMA}{NBSP}unit{P "" s}
 
 STR_COLOUR_DEFAULT                                              :Default
 ###length 17
@@ -457,6 +466,7 @@ STR_SETTINGS_MENU_STATION_NAMES_DISPLAYED                       :Station names d
 STR_SETTINGS_MENU_STATION_NAMES_TRAIN                           :Train stations
 STR_SETTINGS_MENU_STATION_NAMES_LORRY                           :Lorry stops
 STR_SETTINGS_MENU_STATION_NAMES_BUS                             :Bus stops
+STR_SETTINGS_MENU_STATION_NAMES_BUS_LORRY                       :Bus & Lorry stops
 STR_SETTINGS_MENU_STATION_NAMES_SHIP                            :Docks
 STR_SETTINGS_MENU_STATION_NAMES_PLANE                           :Airports
 STR_SETTINGS_MENU_STATION_NAMES_GHOST                           :Ghost
@@ -2995,6 +3005,7 @@ STR_ROAD_TOOLBAR_TOOLTIP_BUILD_TRAM_VEHICLE_DEPOT               :{BLACK}Build tr
 STR_ROAD_TOOLBAR_TOOLTIP_CONVERT_ROAD_TO_WAYPOINT               :{BLACK}Build waypoint on road. Ctrl+Click to select another waypoint to join. Also press Shift to show cost estimate only
 STR_ROAD_TOOLBAR_TOOLTIP_CONVERT_TRAM_TO_WAYPOINT               :{BLACK}Build waypoint on tramway. Ctrl+Click to select another waypoint to join. Also press Shift to show cost estimate only
 STR_ROAD_TOOLBAR_TOOLTIP_BUILD_BUS_STATION                      :{BLACK}Build bus station. Ctrl+Click to select another station to join. Also press Shift to show cost estimate only
+STR_ROAD_TOOLBAR_TOOLTIP_BUILD_BUS_TRUCK_STATION                :{BLACK}Build bus-truck station. Ctrl+Click to select another station to join. Also press Shift to show cost estimate only
 STR_ROAD_TOOLBAR_TOOLTIP_BUILD_PASSENGER_TRAM_STATION           :{BLACK}Build passenger tram station. Ctrl+Click to select another station to join. Also press Shift to show cost estimate only
 STR_ROAD_TOOLBAR_TOOLTIP_BUILD_TRUCK_LOADING_BAY                :{BLACK}Build lorry station. Ctrl+Click to select another station to join. Also press Shift to show cost estimate only
 STR_ROAD_TOOLBAR_TOOLTIP_BUILD_CARGO_TRAM_STATION               :{BLACK}Build freight tram station. Ctrl+Click to select another station to join. Also press Shift to show cost estimate only
@@ -3022,6 +3033,8 @@ STR_STATION_BUILD_BUS_ORIENTATION                               :{WHITE}Bus Stat
 STR_STATION_BUILD_BUS_ORIENTATION_TOOLTIP                       :{BLACK}Select bus station orientation
 STR_STATION_BUILD_TRUCK_ORIENTATION                             :{WHITE}Lorry Station Orientation
 STR_STATION_BUILD_TRUCK_ORIENTATION_TOOLTIP                     :{BLACK}Select lorry station orientation
+STR_STATION_BUILD_BUS_TRUCK_ORIENTATION                         :{WHITE}Combined Station Orientation
+STR_STATION_BUILD_BUS_TRUCK_ORIENTATION_TOOLTIP                 :{BLACK}Select combined station orientation
 STR_STATION_BUILD_PASSENGER_TRAM_ORIENTATION                    :{WHITE}Passenger Tram Station Orientation
 STR_STATION_BUILD_PASSENGER_TRAM_ORIENTATION_TOOLTIP            :{BLACK}Select passenger tram station orientation
 STR_STATION_BUILD_CARGO_TRAM_ORIENTATION                        :{WHITE}Freight Tram Station Orientation
@@ -3280,6 +3293,7 @@ STR_LAI_STATION_DESCRIPTION_AIRCRAFT_HANGAR                     :Aircraft hangar
 STR_LAI_STATION_DESCRIPTION_AIRPORT                             :Airport
 STR_LAI_STATION_DESCRIPTION_TRUCK_LOADING_AREA                  :Lorry station
 STR_LAI_STATION_DESCRIPTION_BUS_STATION                         :Bus station
+STR_LAI_STATION_DESCRIPTION_BUS_TRUCK_STATION                   :Bus-Lorry station
 STR_LAI_STATION_DESCRIPTION_SHIP_DOCK                           :Ship dock
 STR_LAI_STATION_DESCRIPTION_BUOY                                :Buoy
 STR_LAI_STATION_DESCRIPTION_WAYPOINT                            :Waypoint
@@ -5216,6 +5230,7 @@ STR_ERROR_NO_SUITABLE_PLACES_FOR_INDUSTRIES_EXPLANATION         :Change the map 
 STR_ERROR_CAN_T_BUILD_RAILROAD_STATION                          :Can't build railway station here...
 STR_ERROR_CAN_T_BUILD_BUS_STATION                               :Can't build bus station...
 STR_ERROR_CAN_T_BUILD_TRUCK_STATION                             :Can't build lorry station...
+STR_ERROR_CAN_T_BUILD_BUS_TRUCK_STATION                         :Can't build combined station...
 STR_ERROR_CAN_T_BUILD_PASSENGER_TRAM_STATION                    :Can't build passenger tram station...
 STR_ERROR_CAN_T_BUILD_CARGO_TRAM_STATION                        :Can't build freight tram station...
 STR_ERROR_CAN_T_BUILD_DOCK_HERE                                 :Can't build dock here...
@@ -5229,6 +5244,7 @@ STR_ERROR_TOO_MANY_STATIONS_LOADING                             :too many statio
 STR_ERROR_TOO_MANY_STATION_SPECS                                :too many railway station parts
 STR_ERROR_TOO_MANY_BUS_STOPS                                    :too many bus stops
 STR_ERROR_TOO_MANY_TRUCK_STOPS                                  :too many lorry stations
+STR_ERROR_TOO_MANY_BUS_AND_TRUCK_COMBINED_STOPS                 :too many bus and lorry combined stations
 STR_ERROR_TOO_CLOSE_TO_ANOTHER_DOCK                             :too close to another dock
 STR_ERROR_TOO_CLOSE_TO_ANOTHER_AIRPORT                          :too close to another airport
 STR_ERROR_CAN_T_RENAME_STATION                                  :Can't rename station...
@@ -5243,6 +5259,7 @@ STR_ERROR_CAN_T_REMOVE_PART_OF_STATION                          :Can't remove pa
 STR_ERROR_MUST_REMOVE_RAILWAY_STATION_FIRST                     :must remove railway station first
 STR_ERROR_CAN_T_REMOVE_BUS_STATION                              :Can't remove bus station...
 STR_ERROR_CAN_T_REMOVE_TRUCK_STATION                            :Can't remove lorry station...
+STR_ERROR_CAN_T_REMOVE_BUS_TRUCK_STATION                        :Can't remove combined station...
 STR_ERROR_CAN_T_REMOVE_PASSENGER_TRAM_STATION                   :Can't remove passenger tram station...
 STR_ERROR_CAN_T_REMOVE_CARGO_TRAM_STATION                       :Can't remove freight tram station...
 STR_ERROR_MUST_REMOVE_ROAD_STOP_FIRST                           :must remove road stop first
@@ -5613,7 +5630,9 @@ STR_TOWN_BUILDING_NAME_PIGGY_BANK_1                             :Piggy-Bank
 ##id 0x4800
 # industry names
 STR_INDUSTRY_NAME_COAL_MINE                                     :Coal Mine
-STR_INDUSTRY_NAME_POWER_STATION                                 :Power Station
+STR_INDUSTRY_NAME_URANIUM_MINE                                  :Uranium Ore Mine
+STR_INDUSTRY_NAME_POWER_STATION                                 :Coal Power Station
+STR_INDUSTRY_NAME_NUCLEAR_POWER_STATION                         :Nuclear Power Station
 STR_INDUSTRY_NAME_SAWMILL                                       :Sawmill
 STR_INDUSTRY_NAME_FOREST                                        :Forest
 STR_INDUSTRY_NAME_OIL_REFINERY                                  :Oil Refinery

@@ -1474,7 +1474,7 @@ static Order GetOrderCmdFromTile(const Vehicle *v, TileIndex tile)
 				case VehicleType::Ship:     facil = StationFacility::Dock;    break;
 				case VehicleType::Train:    facil = StationFacility::Train;   break;
 				case VehicleType::Aircraft: facil = StationFacility::Airport; break;
-				case VehicleType::Road:     facil = {StationFacility::BusStop, StationFacility::TruckStop}; break;
+				case VehicleType::Road:     facil = {StationFacility::BusStop, StationFacility::TruckStop, StationFacility::BusTruckStop}; break;
 				default: NOT_REACHED();
 			}
 			if (st->facilities.Any(facil)) {

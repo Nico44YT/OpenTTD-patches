@@ -36,7 +36,12 @@ inline bool MayHaveRoad(TileIndex t)
 			return true;
 
 		case TileType::Station: {
-			return GB(_me[t].m6, 3, 4) == 2 || GB(_me[t].m6, 3, 4) == 3 || GB(_me[t].m6, 3, 4) == 8; // IsAnyRoadStop
+			const auto type = static_cast<StationType>(GB(_me[t].m6, 3, 4));
+
+			return type == StationType::Bus ||
+				   type == StationType::Truck ||
+				   type == StationType::BusAndTruck ||
+				   type == StationType::RoadWaypoint;
 		}
 
 		case TileType::TunnelBridge:

@@ -4800,7 +4800,7 @@ bool CanVehicleUseStation(EngineID engine_type, const Station *st)
 			/* For road vehicles we need the vehicle to know whether it can actually
 			 * use the station, but if it doesn't have facilities for RVs it is
 			 * certainly not possible that the station can be used. */
-			return st->facilities.Any({StationFacility::BusStop, StationFacility::TruckStop});
+			return st->facilities.Any({StationFacility::BusStop, StationFacility::TruckStop, StationFacility::BusTruckStop});
 
 		case VehicleType::Ship:
 			return st->facilities.Test(StationFacility::Dock);

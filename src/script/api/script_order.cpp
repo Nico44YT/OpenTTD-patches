@@ -286,6 +286,8 @@ static ScriptOrder::OrderPosition RealOrderPositionToScriptOrderPosition(Vehicle
 				return st->bus_stops->xy;
 			} else if (st->truck_stops != nullptr) {
 				return st->truck_stops->xy;
+			} else if (st->bus_and_truck_stops != nullptr) {
+				return st->bus_and_truck_stops->xy;
 			} else if (!st->airport.IsEmpty()) {
 				for (TileIndex tile : st->airport) {
 					if (st->TileBelongsToAirport(tile) && !::IsHangar(tile)) return tile;

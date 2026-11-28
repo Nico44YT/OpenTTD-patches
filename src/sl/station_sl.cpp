@@ -762,6 +762,7 @@ static const NamedSaveLoad _station_desc[] = {
 
 	NSL("bus_stops",                              SLE_REF(Station, bus_stops,                     REF_ROADSTOPS)),
 	NSL("truck_stops",                            SLE_REF(Station, truck_stops,                   REF_ROADSTOPS)),
+	NSL("bus_and_truck_stops",					   SLE_REF(Station, bus_and_truck_stops,           REF_ROADSTOPS)),
 	NSL("ship_station.tile",                SLE_CONDVAR_X(Station, ship_station.tile,             SLE_UINT32,                  SL_MIN_VERSION,        SLV_MULTITILE_DOCKS, SlXvFeatureTest(XSLFTO_AND, XSLFI_MULTIPLE_DOCKS, 0, 0))),
 	NSL("",                                SLE_CONDNULL_X(4,                                                                   SL_MIN_VERSION,        SL_MAX_VERSION,      SlXvFeatureTest(XSLFTO_AND, XSLFI_MULTIPLE_DOCKS, 1, 1))),
 	NSL("ship_station.tile",                  SLE_CONDVAR(Station, ship_station.tile,             SLE_UINT32,                  SLV_MULTITILE_DOCKS,   SL_MAX_VERSION)),

@@ -86,6 +86,7 @@ public:
 		BT_DEPOT,      ///< Build a road depot
 		BT_BUS_STOP,   ///< Build a bus stop
 		BT_TRUCK_STOP, ///< Build a truck stop
+		BT_BUS_TRUCK_STOP, ///< Build a combined bus/truck stop
 	};
 
 	/**

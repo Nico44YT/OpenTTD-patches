@@ -88,7 +88,8 @@ enum class Price : uint8_t {
 	BuildStationRailLength, ///< Additional price for building rail stations dependent on their length.
 	BuildStationAirport, ///< Price for building airports.
 	BuildStationBus, ///< Price for building bus stops.
-	BuildStationTruck, ///< Price for building lorry stations.
+	BuildStationTruck, ///< Price for building truck stations.
+	BuildStationBusTruck, ///< Price for building combined bus and truck stations.
 	BuildStationDock, ///< Price for building docks.
 	BuildVehicleTrain, ///< Price for purchasing new train engines.
 	BuildVehicleWagon, ///< Price for purchasing new wagons.
@@ -113,7 +114,8 @@ enum class Price : uint8_t {
 	ClearStationRail, ///< Price for destroying rail stations.
 	ClearStationAirport, ///< Price for destroying airports.
 	ClearStationBus, ///< Price for destroying bus stops.
-	ClearStationTruck, ///< Price for destroying lorry stations.
+	ClearStationTruck, ///< Price for destroying truck stations.
+	ClearStationBusAndTruck, ///< Price for destroying combined bus and truck stations.
 	ClearStationDock, ///< Price for destroying docks.
 	ClearHouse, ///< Price for destroying houses and other town buildings.
 	ClearRoad, ///< Price for destroying roads.

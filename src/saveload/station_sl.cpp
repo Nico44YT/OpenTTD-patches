@@ -392,6 +392,7 @@ public:
 
 		    SLE_REF(Station, bus_stops,                  SLRefType::RoadStop),
 		    SLE_REF(Station, truck_stops,                SLRefType::RoadStop),
+		    SLE_REF(Station, bus_and_truck_stops,        SLRefType::RoadStop),
 		SLE_CONDVAR(Station, ship_station.tile, VarTypes::U32, SaveLoadVersion::MultitileDocks, SaveLoadVersion::MaxVersion),
 		SLE_CONDVAR(Station, ship_station.w, VarFileType::U8 | VarMemType::U16, SaveLoadVersion::MultitileDocks, SaveLoadVersion::MaxVersion),
 		SLE_CONDVAR(Station, ship_station.h, VarFileType::U8 | VarMemType::U16, SaveLoadVersion::MultitileDocks, SaveLoadVersion::MaxVersion),

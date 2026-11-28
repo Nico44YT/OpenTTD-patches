@@ -142,6 +142,7 @@ static int32_t ClickChangeDateCheat(int32_t new_value, int32_t change_direction)
 	InvalidateWindowClassesData(WindowClass::BuildStation, 0);
 	InvalidateWindowClassesData(WindowClass::BuildBusStation, 0);
 	InvalidateWindowClassesData(WindowClass::BuildTruckStation, 0);
+	InvalidateWindowClassesData(WindowClass::BuildBusTruckStation, 0);
 	InvalidateWindowClassesData(WindowClass::BuildObject, 0);
 	InvalidateWindowClassesData(WindowClass::Finances, 0);
 	ResetSignalVariant();

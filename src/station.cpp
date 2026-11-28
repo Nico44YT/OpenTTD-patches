@@ -220,24 +220,27 @@ void BaseStation::RemoveRoadStopTileData(TileIndex tile)
 
 /**
  * Get the primary road stop (the first road stop) that the given vehicle can load/unload.
- * @param v the vehicle to get the first road stop for
+ * @param vehicle the vehicle to get the first road stop for
  * @return the first roadstop that this vehicle can load at
  */
-RoadStop *Station::GetPrimaryRoadStop(const RoadVehicle *v) const
+RoadStop *Station::GetPrimaryRoadStop(const RoadVehicle *vehicle) const
 {
-	RoadStop *rs = this->GetPrimaryRoadStop(v->IsBus() ? RoadStopType::Bus : RoadStopType::Truck);
+	auto find_usable_stop = [&](RoadStopType type) -> RoadStop * {
+		for (RoadStop *stop = this->GetPrimaryRoadStop(type);
+			 stop != nullptr; stop = stop->next) {
+			if (!HasTileAnyRoadType(stop->xy, vehicle->compatible_roadtypes)) continue;
+			if (IsBayRoadStopTile(stop->xy) && vehicle->HasArticulatedPart()) continue;
+			return stop;
+			 }
+		return nullptr;
+	};
 
-	for (; rs != nullptr; rs = rs->next) {
-		/* The vehicle cannot go to this roadstop (different roadtype) */
-		if (!HasTileAnyRoadType(rs->xy, v->compatible_roadtypes)) continue;
-		/* The vehicle is articulated and can therefore not go to a standard road stop. */
-		if (IsBayRoadStopTile(rs->xy) && v->HasArticulatedPart()) continue;
-
-		/* The vehicle can actually go to this road stop. So, return it! */
-		break;
+	RoadStop *stop = find_usable_stop(RoadStopType::Combined);
+	if (stop == nullptr) {
+		stop = find_usable_stop(vehicle->IsBus() ? RoadStopType::Bus : RoadStopType::Truck);
 	}
 
-	return rs;
+	return stop;
 }
 
 /**
@@ -340,6 +343,7 @@ static uint GetTileCatchmentRadius(TileIndex tile, const Station *st)
 			case StationType::Airport: return st->airport.GetSpec()->catchment + inc;
 			case StationType::Truck:   return CA_TRUCK + inc;
 			case StationType::Bus:     return CA_BUS + inc;
+			case StationType::BusAndTruck: return CA_BUS_TRUCK + inc;
 			case StationType::Dock:    return CA_DOCK + inc;
 
 			default:
@@ -374,11 +378,12 @@ uint Station::GetCatchmentRadius() const
 	if (_settings_game.station.modified_catchment) {
 		if (this->bus_stops != nullptr) ret = std::max<uint>(ret, CA_BUS);
 		if (this->truck_stops != nullptr) ret = std::max<uint>(ret, CA_TRUCK);
+		if (this->bus_and_truck_stops != nullptr) ret = std::max<uint>(ret, CA_BUS_TRUCK);
 		if (!this->train_station.IsEmpty()) ret = std::max<uint>(ret, CA_TRAIN);
 		if (!this->ship_station.IsEmpty()) ret = std::max<uint>(ret, CA_DOCK);
 		if (!this->airport.IsEmpty()) ret = std::max<uint>(ret, this->airport.GetSpec()->catchment);
 	} else {
-		if (this->bus_stops != nullptr || this->truck_stops != nullptr || !this->train_station.IsEmpty() || !this->ship_station.IsEmpty() || !this->airport.IsEmpty()) {
+		if (this->bus_stops != nullptr || this->truck_stops != nullptr || this->bus_and_truck_stops != nullptr || !this->train_station.IsEmpty() || !this->ship_station.IsEmpty() || !this->airport.IsEmpty()) {
 			ret = CA_UNMODIFIED;
 		}
 	}

@@ -434,6 +434,7 @@ static inline uint32_t GetSmallMapRoutesPixels(TileIndex tile, TileType t)
 				case StationType::Airport: return MKCOLOUR_XXXX(PC_RED);
 				case StationType::Truck:   return MKCOLOUR_XXXX(PC_ORANGE);
 				case StationType::Bus:     return MKCOLOUR_XXXX(PC_YELLOW);
+				case StationType::BusAndTruck: return MKCOLOUR_XXXX(PC_LIGHT_YELLOW);
 				case StationType::Dock:    return MKCOLOUR_XXXX(PC_LIGHT_BLUE);
 				default:              return MKCOLOUR_FFFF;
 			}

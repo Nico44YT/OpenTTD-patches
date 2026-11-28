@@ -488,6 +488,7 @@ TileArea Station::GetTileArea(StationType type) const
 		case StationType::Airport: return this->airport;
 		case StationType::Truck: return this->truck_station;
 		case StationType::Bus: return this->bus_station;
+		case StationType::BusAndTruck: return this->bus_and_truck_station;
 		case StationType::Dock:
 		case StationType::Oilrig: return this->docking_station;
 		default: NOT_REACHED();
@@ -788,8 +789,8 @@ void UpdateStationAcceptance(Station *st, bool show_msg)
 
 		/* Make sure the station can accept the goods type. */
 		bool is_passengers = IsCargoInClass(cargo, CargoClass::Passengers);
-		if ((!is_passengers && !st->facilities.Any({StationFacility::Train, StationFacility::TruckStop, StationFacility::Airport, StationFacility::Dock})) ||
-				(is_passengers && !st->facilities.Any({StationFacility::Train, StationFacility::BusStop, StationFacility::Airport, StationFacility::Dock}))) {
+		if ((!is_passengers && !st->facilities.Any({StationFacility::Train, StationFacility::TruckStop, StationFacility::BusTruckStop, StationFacility::Airport, StationFacility::Dock})) ||
+				(is_passengers && !st->facilities.Any({StationFacility::Train, StationFacility::BusStop, StationFacility::BusTruckStop, StationFacility::Airport, StationFacility::Dock}))) {
 			amt = 0;
 		}
 
@@ -924,6 +925,7 @@ void Station::AfterStationTileSetChange(bool adding, StationType type)
 			break;
 		case StationType::Truck:
 		case StationType::Bus:
+		case StationType::BusAndTruck:
 			SetWindowWidgetDirty(WindowClass::StationView, this->index, WID_SV_ROADVEHS);
 			break;
 		case StationType::Dock:
@@ -2182,13 +2184,27 @@ static CommandCost RemoveRailWaypoint(TileIndex tile, DoCommandFlags flags)
 
 
 /**
- * @param truck_station Determines whether a stop is #RoadStopType::Bus or #RoadStopType::Truck
+ * @param stop_type Determines the type of station a stop is #RoadStopType::Bus, #RoadStopType::Truck or #RoadStopType::Combined
  * @param st The Station to do the whole procedure for
  * @return a pointer to where to link a new RoadStop*
  */
-static RoadStop **FindRoadStopSpot(bool truck_station, Station *st)
+static RoadStop **FindRoadStopSpot(const RoadStopType stop_type , Station *st)
 {
-	RoadStop **primary_stop = (truck_station) ? &st->truck_stops : &st->bus_stops;
+	RoadStop **primary_stop = nullptr;
+	switch (stop_type) {
+		case RoadStopType::Bus:
+			primary_stop = &st->bus_stops;
+			break;
+		case RoadStopType::Truck:
+			primary_stop = &st->truck_stops;
+			break;
+		case RoadStopType::Combined:
+			primary_stop = &st->bus_and_truck_stops;
+			break;
+		case RoadStopType::End:
+			assert("FindRoadStopSpot should not be called with RoadStopType::End");
+			return nullptr;
+	}
 
 	if (*primary_stop == nullptr) {
 		/* we have no roadstop of the type yet, so write a "primary stop" */
@@ -2249,6 +2265,7 @@ CommandCost CmdBuildRoadStop(DoCommandFlags flags, TileIndex tile, uint8_t width
 
 	const RoadStopSpec *roadstopspec = cls->GetSpec(spec_index);
 	if (roadstopspec != nullptr) {
+		if (stop_type == RoadStopType::Combined && roadstopspec->stop_type != ROADSTOPTYPE_ALL) return CMD_ERROR;
 		if (stop_type == RoadStopType::Truck && roadstopspec->stop_type != ROADSTOPTYPE_FREIGHT && roadstopspec->stop_type != ROADSTOPTYPE_ALL) return CMD_ERROR;
 		if (stop_type == RoadStopType::Bus && roadstopspec->stop_type != ROADSTOPTYPE_PASSENGER && roadstopspec->stop_type != ROADSTOPTYPE_ALL) return CMD_ERROR;
 		if (!is_drive_through && roadstopspec->flags.Test(RoadStopSpecFlag::DriveThroughOnly)) return CMD_ERROR;
@@ -2274,15 +2291,32 @@ CommandCost CmdBuildRoadStop(DoCommandFlags flags, TileIndex tile, uint8_t width
 	CommandCost ret = CheckIfAuthorityAllowsNewStation(tile, flags);
 	if (ret.Failed()) return ret;
 
-	bool is_truck_stop = stop_type == RoadStopType::Truck;
-	StationType station_type = is_truck_stop ? StationType::Truck : StationType::Bus;
+	StationType station_type;
+	Price station_price;
+	switch (stop_type) {
+		case RoadStopType::Truck:
+			station_type = StationType::Truck;
+			station_price = Price::BuildStationTruck;
+			break;
+		case RoadStopType::Bus:
+			station_type = StationType::Bus;
+			station_price = Price::BuildStationBus;
+			break;
+		case RoadStopType::Combined:
+			station_type = StationType::BusAndTruck;
+			station_price = Price::BuildStationBusTruck;
+			break;
+		default: {
+			return CMD_ERROR;
+		}
+	}
 
 	/* Total road stop cost. */
 	Money unit_cost;
 	if (roadstopspec != nullptr) {
-		unit_cost = roadstopspec->GetBuildCost(is_truck_stop ? Price::BuildStationTruck : Price::BuildStationBus);
+		unit_cost = roadstopspec->GetBuildCost(station_price);
 	} else {
-		unit_cost = _price[is_truck_stop ? Price::BuildStationTruck : Price::BuildStationBus];
+		unit_cost = _price[station_price];
 	}
 	CommandCost cost(ExpensesType::Construction, roadstop_area.w * roadstop_area.h * unit_cost);
 	StationID est = StationID::Invalid();
@@ -2295,7 +2329,9 @@ CommandCost CmdBuildRoadStop(DoCommandFlags flags, TileIndex tile, uint8_t width
 	if (ret.Failed()) return ret;
 
 	/* Check if this number of road stops can be allocated. */
-	if (!RoadStop::CanAllocateItem(static_cast<size_t>(roadstop_area.w) * roadstop_area.h)) return CommandCost(is_truck_stop ? STR_ERROR_TOO_MANY_TRUCK_STOPS : STR_ERROR_TOO_MANY_BUS_STOPS);
+	if (!RoadStop::CanAllocateItem(static_cast<size_t>(roadstop_area.w) * roadstop_area.h))
+		return CommandCost(stop_type == RoadStopType::Bus ? STR_ERROR_TOO_MANY_BUS_STOPS :
+			(stop_type == RoadStopType::Truck ? STR_ERROR_TOO_MANY_TRUCK_STOPS : STR_ERROR_TOO_MANY_BUS_AND_TRUCK_COMBINED_STOPS));
 
 	ret = BuildStationPart(&st, flags, reuse, roadstop_area, StationNaming::Road);
 	if (ret.Failed()) return ret;
@@ -2344,17 +2380,27 @@ CommandCost CmdBuildRoadStop(DoCommandFlags flags, TileIndex tile, uint8_t width
 
 			RoadStop *road_stop = RoadStop::Create(cur_tile);
 			/* Insert into linked list of RoadStops. */
-			RoadStop **currstop = FindRoadStopSpot(is_truck_stop, st);
+			RoadStop **currstop = FindRoadStopSpot(stop_type, st);
 			*currstop = road_stop;
 
-			if (is_truck_stop) {
-				st->truck_station.Add(cur_tile);
-			} else {
-				st->bus_station.Add(cur_tile);
+			/* Initialize an empty station. */
+			switch (stop_type) {
+				case RoadStopType::Bus:
+					st->bus_station.Add(cur_tile);
+					st->AddFacility(StationFacility::BusStop, cur_tile);
+					break;
+				case RoadStopType::Truck:
+					st->truck_station.Add(cur_tile);
+					st->AddFacility(StationFacility::TruckStop, cur_tile);
+					break;
+				case RoadStopType::Combined:
+					st->bus_and_truck_station.Add(cur_tile);
+					st->AddFacility(StationFacility::BusTruckStop, cur_tile);
+					break;
+				case RoadStopType::End:
+					break;
 			}
 
-			/* Initialize an empty station. */
-			st->AddFacility(is_truck_stop ? StationFacility::TruckStop : StationFacility::BusStop, cur_tile);
 
 			st->spread.Add(cur_tile);
 
@@ -2450,6 +2496,7 @@ CommandCost RemoveRoadWaypointStop(TileIndex tile, DoCommandFlags flags, int rep
 			if (wp->road_waypoint_area.IsEmpty()) {
 				wp->facilities.Reset(StationFacility::BusStop);
 				wp->facilities.Reset(StationFacility::TruckStop);
+				wp->facilities.Reset(StationFacility::BusTruckStop);
 				SetWindowWidgetDirty(WindowClass::StationView, wp->index, WID_SV_ROADVEHS);
 				wp->UpdateVirtCoord();
 				DeleteStationIfEmpty(wp);
@@ -2482,16 +2529,22 @@ CommandCost RemoveRoadStop(TileIndex tile, DoCommandFlags flags, int replacement
 		if (ret.Failed()) return ret;
 	}
 
-	bool is_truck = IsTruckStop(tile);
-
 	RoadStop **primary_stop;
 	RoadStop *cur_stop;
-	if (is_truck) { // truck stop
-		primary_stop = &st->truck_stops;
-		cur_stop = RoadStop::GetByTile(tile, RoadStopType::Truck);
-	} else {
-		primary_stop = &st->bus_stops;
-		cur_stop = RoadStop::GetByTile(tile, RoadStopType::Bus);
+	switch (GetRoadStopType(tile)) {
+		case RoadStopType::Bus:
+			primary_stop = &st->bus_stops;
+			cur_stop = RoadStop::GetByTile(tile, RoadStopType::Bus);
+			break;
+		case RoadStopType::Truck:
+			primary_stop = &st->truck_stops;
+			cur_stop = RoadStop::GetByTile(tile, RoadStopType::Truck);
+			break;
+		case RoadStopType::Combined:
+			primary_stop = &st->bus_and_truck_stops;
+			cur_stop = RoadStop::GetByTile(tile, RoadStopType::Combined);
+			break;
+		default: NOT_REACHED();
 	}
 
 	assert(cur_stop != nullptr);
@@ -2524,7 +2577,18 @@ CommandCost RemoveRoadStop(TileIndex tile, DoCommandFlags flags, int replacement
 			*primary_stop = cur_stop->next;
 			/* removed the only stop? */
 			if (*primary_stop == nullptr) {
-				st->facilities.Reset(is_truck ? StationFacility::TruckStop : StationFacility::BusStop);
+				switch (GetRoadStopType(tile)) {
+					case RoadStopType::Bus:
+						st->facilities.Reset(StationFacility::BusStop);
+						break;
+					case RoadStopType::Truck:
+						st->facilities.Reset(StationFacility::TruckStop);
+						break;
+					case RoadStopType::Combined:
+						st->facilities.Reset(StationFacility::BusTruckStop);
+						break;
+					default: NOT_REACHED();
+				}
 				SetWindowClassesDirty(WindowClass::VehicleOrders);
 			}
 		} else {
@@ -2567,25 +2631,47 @@ CommandCost RemoveRoadStop(TileIndex tile, DoCommandFlags flags, int replacement
 
 		MakeStationSpreadAreaSmaller(st);
 
-		if (replacement_spec_index < 0) st->AfterStationTileSetChange(false, is_truck ? StationType::Truck: StationType::Bus);
+		if (replacement_spec_index < 0) {
+			st->AfterStationTileSetChange(false, GetStationType(tile));
+		}
 
 		st->tile_waiting_random_triggers.erase(tile);
 		st->RemoveRoadStopTileData(tile);
 		if ((int)specindex != replacement_spec_index) DeallocateRoadStopSpecFromStation(st, specindex);
 
 		/* Update the tile area of the truck/bus stop */
-		if (is_truck) {
-			st->truck_station.Clear();
-			for (const RoadStop *rs = st->truck_stops; rs != nullptr; rs = rs->next) st->truck_station.Add(rs->xy);
-		} else {
-			st->bus_station.Clear();
-			for (const RoadStop *rs = st->bus_stops; rs != nullptr; rs = rs->next) st->bus_station.Add(rs->xy);
+		switch (GetRoadStopType(tile)) {
+			case RoadStopType::Bus:
+				st->bus_station.Clear();
+				for (const RoadStop *rs = st->bus_stops; rs != nullptr; rs = rs->next) st->bus_station.Add(rs->xy);
+				break;
+			case RoadStopType::Truck:
+				st->truck_station.Clear();
+				for (const RoadStop *rs = st->truck_stops; rs != nullptr; rs = rs->next) st->truck_station.Add(rs->xy);
+				break;
+			case RoadStopType::Combined:
+				st->bus_and_truck_station.Clear();
+				for (const RoadStop *rs = st->bus_and_truck_stops; rs != nullptr; rs = rs->next) st->bus_and_truck_station.Add(rs->xy);
+				break;
+			default: NOT_REACHED();
 		}
 
 		NotifyRoadLayoutChanged(false);
 	}
 
-	Price category = is_truck ? Price::ClearStationTruck : Price::ClearStationBus;
+	Price category;
+	switch (GetRoadStopType(tile)) {
+		case RoadStopType::Bus:
+			category = Price::ClearStationBus;
+			break;
+		case RoadStopType::Truck:
+			category = Price::ClearStationTruck;
+			break;
+		case RoadStopType::Combined:
+			category = Price::ClearStationBusAndTruck;
+			break;
+		default: NOT_REACHED();
+	}
 	return CommandCost(ExpensesType::Construction, spec != nullptr ? spec->GetClearCost(category) : _price[category]);
 }
 
@@ -3919,6 +4005,7 @@ static void GetTileDesc_Station(TileIndex tile, TileDesc &td)
 			break;
 		case StationType::Truck:    str = STR_LAI_STATION_DESCRIPTION_TRUCK_LOADING_AREA; break;
 		case StationType::Bus:      str = STR_LAI_STATION_DESCRIPTION_BUS_STATION; break;
+		case StationType::BusAndTruck: str = STR_LAI_STATION_DESCRIPTION_BUS_TRUCK_STATION; break;
 		case StationType::Oilrig: {
 			const Industry *i = Station::GetByTile(tile)->industry;
 			const IndustrySpec *is = GetIndustrySpec(i->type);
@@ -4014,6 +4101,7 @@ static void TileLoop_Station(TileIndex tile)
 
 		case StationType::Truck:
 		case StationType::Bus:
+		case StationType::BusAndTruck:
 			TriggerRoadStopAnimation(st, tile, StationAnimationTrigger::TileLoop);
 			break;
 
@@ -4930,7 +5018,7 @@ CommandCost CmdRenameStation(DoCommandFlags flags, StationID station_id, bool ge
 					name_class = StationNaming::Dock;
 				} else if (st->facilities.Test(StationFacility::Train)) {
 					name_class = StationNaming::Rail;
-				} else if (st->facilities.Any({StationFacility::BusStop, StationFacility::TruckStop})) {
+				} else if (st->facilities.Any({StationFacility::BusStop, StationFacility::TruckStop, StationFacility::BusTruckStop})) {
 					name_class = StationNaming::Road;
 				} else {
 					name_class = StationNaming::Rail;
@@ -5115,6 +5203,8 @@ static bool CanMoveGoodsToStation(const Station *st, CargoType cargo)
 
 	/* Selectively servicing stations, and not this one. */
 	if (_settings_game.order.selectgoods && !st->goods[cargo].HasVehicleEverTriedLoading()) return false;
+
+	if (st->facilities == StationFacility::BusTruckStop) return true; // TODO maybe not what is meant? - Nico
 
 	if (IsCargoInClass(cargo, CargoClass::Passengers)) {
 		/* Passengers are never served by just a truck stop. */
@@ -5348,6 +5438,7 @@ static void ChangeTileOwner_Station(TileIndex tile, Owner old_owner, Owner new_o
 
 			case StationType::Bus:
 			case StationType::Truck:
+			case StationType::BusAndTruck:
 			case StationType::RoadWaypoint:
 				/* Road stops were already handled above. */
 				break;
@@ -5379,7 +5470,7 @@ static void ChangeTileOwner_Station(TileIndex tile, Owner old_owner, Owner new_o
 			if (IsRoadWaypoint(tile)) {
 				Command<Commands::RemoveFromRoadWaypoint>::Do({DoCommandFlag::Execute, DoCommandFlag::Bankrupt}, tile, tile);
 			} else {
-				Command<Commands::RemoveRoadStop>::Do({DoCommandFlag::Execute, DoCommandFlag::Bankrupt}, tile, 1, 1, (GetStationType(tile) == StationType::Truck) ? RoadStopType::Truck : RoadStopType::Bus, false);
+				Command<Commands::RemoveRoadStop>::Do({DoCommandFlag::Execute, DoCommandFlag::Bankrupt}, tile, 1, 1, GetRoadStopType(GetStationType(tile)), false);
 			}
 			assert_tile(IsTileType(tile, TileType::Road), tile);
 			/* Change owner of tile and all roadtypes */
@@ -5450,6 +5541,7 @@ CommandCost ClearTile_Station(TileIndex tile, DoCommandFlags flags)
 			case StationType::Airport:      return CommandCost(STR_ERROR_MUST_DEMOLISH_AIRPORT_FIRST);
 			case StationType::Truck:        return CommandCost(HasTileRoadType(tile, RoadTramType::Tram) ? STR_ERROR_MUST_DEMOLISH_CARGO_TRAM_STATION_FIRST : STR_ERROR_MUST_DEMOLISH_TRUCK_STATION_FIRST);
 			case StationType::Bus:          return CommandCost(HasTileRoadType(tile, RoadTramType::Tram) ? STR_ERROR_MUST_DEMOLISH_PASSENGER_TRAM_STATION_FIRST : STR_ERROR_MUST_DEMOLISH_BUS_STATION_FIRST);
+			case StationType::BusAndTruck:  return CommandCost(HasTileRoadType(tile,  RoadTramType::Tram) ? STR_ERROR_MUST_DEMOLISH_PASSENGER_TRAM_STATION_FIRST : STR_ERROR_MUST_DEMOLISH_BUS_STATION_FIRST);
 			case StationType::Buoy:         return CommandCost(STR_ERROR_BUOY_IN_THE_WAY);
 			case StationType::Dock:         return CommandCost(STR_ERROR_MUST_DEMOLISH_DOCK_FIRST);
 
@@ -5465,6 +5557,7 @@ CommandCost ClearTile_Station(TileIndex tile, DoCommandFlags flags)
 
 		case StationType::Truck:
 		case StationType::Bus:
+		case StationType::BusAndTruck:
 			if (IsDriveThroughStopTile(tile)) {
 				CommandCost remove_road = CanRemoveRoadWithStop(tile, flags);
 				if (remove_road.Failed()) return remove_road;
@@ -5508,6 +5601,7 @@ static CommandCost TerraformTile_Station(TileIndex tile, DoCommandFlags flags, i
 
 				case StationType::Truck:
 				case StationType::Bus:
+				case StationType::BusAndTruck:
 				case StationType::RoadWaypoint: {
 					if (IsDriveThroughStopTile(tile)) {
 						if (!AutoslopeCheckForAxis(tile, z_new, tileh_new, GetDriveThroughStopAxis(tile))) break;

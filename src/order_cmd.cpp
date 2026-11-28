@@ -51,6 +51,7 @@
 #include <ranges>
 #include <vector>
 
+#include "console_func.h"
 #include "safeguards.h"
 
 /* DestinationID must be at least as large as every these below, because it can
@@ -1183,7 +1184,9 @@ static CommandCost PreInsertOrderCheck(Vehicle *v, const Order &new_order, CmdIn
 				}
 
 				case VehicleType::Road: {
-					if (!wp->facilities.Test(StationFacility::BusStop) && !wp->facilities.Test(StationFacility::TruckStop)) return CommandCost::DualErrorMessage(STR_ERROR_CAN_T_ADD_ORDER, STR_ERROR_NO_ROAD_WAYPOINT);
+					if (!wp->facilities.Test(StationFacility::BusStop) && !wp->facilities.Test(StationFacility::TruckStop) && !wp->facilities.Test(StationFacility::BusTruckStop))
+						return CommandCost::DualErrorMessage(STR_ERROR_CAN_T_ADD_ORDER, STR_ERROR_NO_ROAD_WAYPOINT);
+
 
 					CommandCost ret = CheckInfraUsageAllowed(v->type, wp->owner);
 					if (ret.Failed()) return ret;

@@ -1148,6 +1148,7 @@ void InvalidateAllPickerWindows()
 {
 	InvalidateWindowClassesData(WindowClass::BuildBusStation, PickerWindow::PICKER_INVALIDATION_ALL.base());
 	InvalidateWindowClassesData(WindowClass::BuildTruckStation, PickerWindow::PICKER_INVALIDATION_ALL.base());
+	InvalidateWindowClassesData(WindowClass::BuildBusTruckStation, PickerWindow::PICKER_INVALIDATION_ALL.base());
 	InvalidateWindowClassesData(WindowClass::JoinStation, PickerWindow::PICKER_INVALIDATION_ALL.base());
 	InvalidateWindowClassesData(WindowClass::BuildWaypoint, PickerWindow::PICKER_INVALIDATION_ALL.base());
 	InvalidateWindowClassesData(WindowClass::BuildObject, PickerWindow::PICKER_INVALIDATION_ALL.base());

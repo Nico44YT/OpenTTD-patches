@@ -48,15 +48,45 @@ inline StationType GetStationType(TileIndex t)
 }
 
 /**
+ * Get the station type from a road stop type
+ * @param rst the road stop type
+ * @pre GetStationType(rst, RoadStopType)
+ * @return the station type
+ */
+inline StationType GetStationType(RoadStopType rst) {
+	switch (rst) {
+		case RoadStopType::Bus:
+			return StationType::Bus;
+		case RoadStopType::Truck:
+			return StationType::Truck;
+		case RoadStopType::Combined:
+			return StationType::BusAndTruck;
+		default: NOT_REACHED();
+	}
+}
+
+inline RoadStopType GetRoadStopType(StationType station) {
+	switch (station) {
+		case StationType::Truck:
+			return RoadStopType::Truck;
+		case StationType::Bus:
+			return RoadStopType::Bus;
+		case StationType::BusAndTruck:
+			return RoadStopType::Combined;
+		default: NOT_REACHED();
+	}
+}
+
+/**
  * Get the road stop type of this tile
- * @param t the tile to query
- * @pre GetStationType(t) == StationType::Truck || GetStationType(t) == StationType::Bus
+ * @param tile_index the tile to query
+ * @pre GetStationType(t) == StationType::Truck || GetStationType(t) == StationType::Bus || GetStationType(t) == StationType::BusAndTruck
  * @return the road stop type
  */
-inline RoadStopType GetRoadStopType(TileIndex t)
+inline RoadStopType GetRoadStopType(TileIndex tile_index)
 {
-	dbg_assert_tile(GetStationType(t) == StationType::Truck || GetStationType(t) == StationType::Bus, t);
-	return GetStationType(t) == StationType::Truck ? RoadStopType::Truck : RoadStopType::Bus;
+	dbg_assert_tile(GetStationType(tile_index) == StationType::Truck || GetStationType(tile_index) == StationType::Bus || GetStationType(tile_index) == StationType::BusAndTruck, tile_index);
+	return GetRoadStopType(GetStationType(tile_index));
 }
 
 /**
@@ -194,6 +224,17 @@ inline bool IsBusStop(TileIndex t)
 }
 
 /**
+ * Is the station at \a t a truck stop?
+ * @param t Tile to check
+ * @pre IsTileType(t, TileType::Station)
+ * @return \c true if station is a truck stop, \c false otherwise
+ */
+inline bool IsBusAndTruckStop(TileIndex t)
+{
+	return GetStationType(t) == StationType::BusAndTruck;
+}
+
+/**
  * Is the station at \a t a road waypoint?
  * @param t Tile to check
  * @pre IsTileType(t, TileType::Station)
@@ -223,7 +264,7 @@ inline bool IsRoadWaypointTile(TileIndex t)
 inline bool IsStationRoadStop(TileIndex t)
 {
 	dbg_assert_tile(IsTileType(t, TileType::Station), t);
-	return IsTruckStop(t) || IsBusStop(t);
+	return IsTruckStop(t) || IsBusStop(t) || IsBusAndTruckStop(t);
 }
 
 /**
@@ -245,7 +286,7 @@ inline bool IsStationRoadStopTile(TileIndex t)
 inline bool IsAnyRoadStop(TileIndex t)
 {
 	dbg_assert_tile(IsTileType(t, TileType::Station), t);
-	return IsTruckStop(t) || IsBusStop(t) || IsRoadWaypoint(t);
+	return IsBusAndTruckStop(t) || IsTruckStop(t) || IsBusStop(t) || IsRoadWaypoint(t);
 }
 
 /**
@@ -800,7 +841,7 @@ inline void MakeRailWaypoint(TileIndex t, Owner o, StationID sid, Axis a, uint8_
  */
 inline void MakeRoadStop(TileIndex t, Owner o, StationID sid, RoadStopType rst, RoadType road_rt, RoadType tram_rt, DiagDirection d)
 {
-	MakeStation(t, o, sid, (rst == RoadStopType::Bus ? StationType::Bus : StationType::Truck), to_underlying(d));
+	MakeStation(t, o, sid, GetStationType(rst), to_underlying(d));
 	SetRoadTypes(t, road_rt, tram_rt);
 	SetRoadOwner(t, RoadTramType::Road, o);
 	SetRoadOwner(t, RoadTramType::Tram, o);

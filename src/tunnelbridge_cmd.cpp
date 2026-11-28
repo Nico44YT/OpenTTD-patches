@@ -589,6 +589,7 @@ CommandCost CmdBuildBridge(DoCommandFlags flags, TileIndex tile_end, TileIndex t
 
 					case StationType::Bus:
 					case StationType::Truck:
+					case StationType::BusAndTruck:
 					case StationType::RoadWaypoint: {
 						CommandCost ret = IsRoadStopBridgeAboveOK(tile, GetRoadStopSpec(tile), station_type, IsDriveThroughStopTile(tile),
 								IsDriveThroughStopTile(tile) ? AxisToDiagDir(GetDriveThroughStopAxis(tile)) : GetBayRoadStopDir(tile), bridge_above);
@@ -767,6 +768,7 @@ CommandCost CmdBuildBridge(DoCommandFlags flags, TileIndex tile_end, TileIndex t
 
 						case StationType::Bus:
 						case StationType::Truck:
+						case StationType::BusAndTruck:
 						case StationType::RoadWaypoint: {
 							CommandCost ret = IsRoadStopBridgeAboveOK(tile, GetRoadStopSpec(tile), station_type, IsDriveThroughStopTile(tile),
 									IsDriveThroughStopTile(tile) ? AxisToDiagDir(GetDriveThroughStopAxis(tile)) : GetBayRoadStopDir(tile), bridge_above);

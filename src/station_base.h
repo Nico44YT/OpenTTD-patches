@@ -894,15 +894,17 @@ struct Station final : SpecializedStation<Station, false> {
 public:
 	RoadStop *GetPrimaryRoadStop(RoadStopType type) const
 	{
-		return type == RoadStopType::Bus ? bus_stops : truck_stops;
+		return type == RoadStopType::Bus ? bus_stops : (type == RoadStopType::Truck ? truck_stops : bus_and_truck_stops);
 	}
 
-	RoadStop *GetPrimaryRoadStop(const struct RoadVehicle *v) const;
+	RoadStop *GetPrimaryRoadStop(const struct RoadVehicle *vehicle) const;
 
 	RoadStop *bus_stops = nullptr;          ///< All the road stops
 	TileArea bus_station{};                 ///< Tile area the bus 'station' part covers
 	RoadStop *truck_stops = nullptr;        ///< All the truck stops
 	TileArea truck_station{};               ///< Tile area the truck 'station' part covers
+	RoadStop *bus_and_truck_stops = nullptr;
+	TileArea bus_and_truck_station{};
 
 	Airport airport{};                      ///< Tile area the airport covers
 	TileArea ship_station{};                ///< Tile area the ship 'station' part covers

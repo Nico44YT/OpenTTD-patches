@@ -1176,6 +1176,7 @@ bool AfterLoadGame()
 				switch (GetStationType(t)) {
 					case StationType::Truck:
 					case StationType::Bus:
+					case StationType::BusAndTruck:
 						if (IsSavegameVersionBefore(SLV_6)) {
 							/* Before version 5 you could not have more than 250 stations.
 							 * Version 6 adds large maps, so you could only place 253*253
@@ -1190,8 +1191,21 @@ bool AfterLoadGame()
 							 * internal data structure. */
 							RoadStop *rs = RoadStop::Create(t);
 
-							RoadStop **head =
-								IsTruckStop(t) ? &st->truck_stops : &st->bus_stops;
+							RoadStop **head;
+
+							switch (GetStationType(t)) {
+								case StationType::Truck:
+									head = &st->truck_stops;
+									break;
+								case StationType::Bus:
+									head = &st->bus_stops;
+									break;
+								case StationType::BusAndTruck:
+									head = &st->bus_and_truck_stops;
+									break;
+								default: NOT_REACHED();
+							}
+
 							*head = rs;
 						}
 						break;

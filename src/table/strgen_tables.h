@@ -154,6 +154,7 @@ static const CmdStruct _cmd_structs[] = {
 	{"TRAIN",             EmitSingleChar, SCC_TRAIN,              0, std::nullopt, {CmdFlag::DontCount}},
 	{"LORRY",             EmitSingleChar, SCC_LORRY,              0, std::nullopt, {CmdFlag::DontCount}},
 	{"BUS",               EmitSingleChar, SCC_BUS,                0, std::nullopt, {CmdFlag::DontCount}},
+	{"BUS_LORRY",		  EmitSingleChar, SCC_BUS_LORRY,          0, std::nullopt, {CmdFlag::DontCount}},
 	{"PLANE",             EmitSingleChar, SCC_PLANE,              0, std::nullopt, {CmdFlag::DontCount}},
 	{"SHIP",              EmitSingleChar, SCC_SHIP,               0, std::nullopt, {CmdFlag::DontCount}},
 	{"NBSP",              EmitSingleChar, 0xA0,                   0, std::nullopt, {CmdFlag::DontCount}},

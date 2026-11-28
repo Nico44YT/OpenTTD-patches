@@ -1,5 +1,6 @@
 add_subdirectory(openttd)
 add_subdirectory(orig_extra)
+add_subdirectory(nico_extra)
 
 set(BASESET_SOURCE_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/orig_dos.obg
@@ -22,6 +23,7 @@ set(BASESET_OTHER_SOURCE_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/OpenTTD-Small.ttf
         ${CMAKE_CURRENT_SOURCE_DIR}/OpenTTD-Mono.ttf
         ${CMAKE_CURRENT_SOURCE_DIR}/innerhighlight.grf
+        ${CMAKE_CURRENT_SOURCE_DIR}/nico_extra.grf
         ${CMAKE_CURRENT_SOURCE_DIR}/progsignals.grf
         ${CMAKE_CURRENT_SOURCE_DIR}/extra_signals.grf
         ${CMAKE_CURRENT_SOURCE_DIR}/route_step.grf
@@ -37,12 +39,15 @@ endif ()
 if(GRFCODEC_FOUND)
     set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/openttd.grf PROPERTIES GENERATED TRUE)
     set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/orig_extra.grf PROPERTIES GENERATED TRUE)
+    set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/nico_extra.grf PROPERTIES GENERATED TRUE)
 
     list(APPEND BASESET_BINARY_FILES openttd.grf)
     list(APPEND BASESET_BINARY_FILES orig_extra.grf)
+    list(APPEND BASESET_BINARY_FILES nico_extra.grf)
 endif()
 
 set(BASESET_EXTRAGRF_FILE ${CMAKE_CURRENT_SOURCE_DIR}/orig_extra.grf)
+set(BASESET_EXTRAGRF_NICO_FILE ${CMAKE_CURRENT_SOURCE_DIR}/nico_extra.grf)
 
 # Walk over all the baseset files, and generate a command to configure them
 foreach(BASESET_SOURCE_FILE IN LISTS BASESET_SOURCE_FILES)
@@ -56,6 +61,7 @@ foreach(BASESET_SOURCE_FILE IN LISTS BASESET_SOURCE_FILES)
                     -DBASESET_SOURCE_FILE=${BASESET_SOURCE_FILE}
                     -DBASESET_BINARY_FILE=${BASESET_BINARY_FILE}
                     -DBASESET_EXTRAGRF_FILE=${BASESET_EXTRAGRF_FILE}
+                    -DBASESET_EXTRAGRF_NICO_FILE=${BASESET_EXTRAGRF_NICO_FILE}
                     -P ${CMAKE_SOURCE_DIR}/cmake/scripts/Baseset.cmake
                     --
                     ${LANG_SOURCE_FILES}
@@ -63,6 +69,8 @@ foreach(BASESET_SOURCE_FILE IN LISTS BASESET_SOURCE_FILES)
             DEPENDS ${LANG_SOURCE_FILES}
                     ${BASESET_EXTRAGRF_FILE}
                     ${BASESET_EXTRAGRF_FILE}.hash
+                    ${BASESET_EXTRAGRF_NICO_FILE}
+                    ${BASESET_EXTRAGRF_NICO_FILE}.hash
                     ${CMAKE_SOURCE_DIR}/cmake/scripts/Baseset.cmake
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
             COMMENT "Generating ${BASESET_SOURCE_FILE_NAME} baseset metadata file"

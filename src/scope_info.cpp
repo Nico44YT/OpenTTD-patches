@@ -121,6 +121,7 @@ void GeneralFmtDumper<BaseStation, const BaseStation *>::fmt_format_value(format
 		dump_facil('R', StationFacility::Train);
 		dump_facil('T', StationFacility::TruckStop);
 		dump_facil('B', StationFacility::BusStop);
+		dump_facil('C', StationFacility::BusTruckStop);
 		dump_facil('A', StationFacility::Airport);
 		dump_facil('D', StationFacility::Dock);
 		dump_facil('W', StationFacility::Waypoint);
